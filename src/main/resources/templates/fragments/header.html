@@ -49,13 +49,22 @@
                 <a th:href="@{/register}" role="button" class="btn btn-primary">Sign-up</a>
             </th:block>
 
-
-
             <form sec:authorize="isAuthenticated()"
                   th:method = "POST"
                   th:action="@{/logout}">
                 <label sec:authorize="isAuthenticated()" class="text-primary me-2">Welcome, <span sec:authentication="name"></span> </label>
                 <button type="submit" class="btn btn-primary" th:text="Logout"></button>
+            </form>
+
+            <form th:method="GET" class="mt-2">
+                <label for="lang" th:text="#{nav_bar_language}">Language:</label>
+                <select
+                        id="lang"
+                        name="lang"
+                        onchange="this.form.submit()">
+                    <option value = "en_US" th:selected="${#locale.toString() == 'en_US'}">English</option>
+                    <option value = "bg_BG" th:selected="${#locale.toString() == 'bg_BG'}">Български</option>
+                </select>
             </form>
 
         </div>
