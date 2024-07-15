@@ -1,0 +1,12 @@
+.course-card {
+    width: 100%;
+    max-width: 300px;
+}
+.course-image {
+    height: 200px;
+    object-fit: cover;
+}
+.course-body {
+    height: 150px;
+    overflow: hidden;
+}

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <head th:include="fragments/head:: headerFragment (pageTitle = ${course.getTitle()})">
+  </head>
+</head>
+<body>
+
+<div th:replace="~{/fragments/color-toggle}">Color toggle</div>
+
+<div th:replace="~{fragments/header::navbar(activeLink=${'courses'})}">Header</div>
+
+<div class="b-example-divider"></div>
+
+<div class="container my-5">
+  <!-- Hero Section -->
+  <div class="hero-section mb-5">
+    <h1 th:text="${course.title}">Course Title</h1>
+    <h4 th:text="'Instructor: ' + ${course.instructor.name}">Instructor Name</h4>
+  </div>
+
+  <div class="row">
+    <!-- Left Section -->
+    <div class="col-md-4">
+      <!-- Course Photo -->
+      <div class="card card-shadow">
+        <img th:src="${course.imageUrl}" class="course-photo" alt="Course Image">
+      </div>
+
+      <!-- Course Details -->
+      <div class="card card-shadow p-3 text-center">
+        <h3 th:text="${course.title}">Course Title</h3>
+        <img th:src="${course.instructor.photoUrl}" class="instructor-photo mb-3" alt="Instructor Photo">
+<!--        <p th:text="'Term: ' + ${course.term}">Term</p>-->
+        <p th:text="'Instructor: ' + ${course.instructor.name}">Instructor</p>
+        <button class="btn btn-primary enroll-button">Enroll</button>
+      </div>
+    </div>
+
+    <!-- Right Section -->
+    <div class="col-md-8">
+      <!-- Course Description -->
+      <div class="card card-shadow p-3 mb-4">
+        <h3>Description</h3>
+        <p th:text="${course.description}">Course description goes here.</p>
+      </div>
+
+      <!-- Students List -->
+      <div class="card card-shadow p-3">
+        <h3>Students</h3>
+        <div class="d-flex flex-wrap">
+          <div th:if="${course.students.size() == 0}">No students currently enrolled</div>
+          <div th:each="student : ${course.students}" class="student-card">
+            <img th:src="${student.photoUrl}" class="student-photo" alt="Student Photo">
+            <div class="student-name" th:text="${student.name}">Student Name</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="b-example-divider"></div>
+
+<div th:replace="~{fragments/footer}">Footer</div>
+
+<script src="/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

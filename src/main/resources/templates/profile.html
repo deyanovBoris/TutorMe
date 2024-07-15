@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+    <link rel="stylesheet" href="/css/userPage.css">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+
+    <script src="/js/bootstrap.bundle.min.js"></script>
+    <script defer src="/js/userPage.js"></script>
+</head>
+<body>
+<header>
+    <h1>User Dashboard</h1>
+    <button class="nav-toggle" aria-label="toggle navigation">
+        <span class="hamburger"></span>
+    </button>
+    <nav>
+        <ul class="nav-list">
+            <li><a href="#profile">Profile</a></li>
+            <li><a href="#settings">Settings</a></li>
+            <li><a href="#appointments">Appointments</a></li>
+            <li><a href="#students">My Students</a></li>
+            <li><a href="#courses">My Courses</a></li>
+            <li>
+                <form th:action="@{/logout}" th:method="POST">
+                    <button type="submit" th:text="Logout"></button>
+                </form>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main>
+    <section class="main-content">
+        <div class="profile-section">
+            <section id="profile">
+                <h2>Profile</h2>
+                <p>Welcome, <span th:text="${userId}"></span></p>
+            </section>
+        </div>
+        <div class="right-section">
+            <section id="courses">
+                <h2>My Courses</h2>
+                <div class="cards-container" >
+                    <div th:each="course : ${courses}" class="card">
+                        <h3 th:text="${course.title}"></h3>
+                        <p th:text="${course.description}"></p>
+                        <p><strong>Term:</strong> <span th:text="${course.term}"></span></p>
+                        <p><strong>Start Date:</strong> <span th:text="${course.startDate}"></span></p>
+                        <p><strong>End Date:</strong> <span th:text="${course.endDate}"></span></p>
+                        <button>Edit Course</button>
+                    </div>
+                </div>
+            </section>
+            <section id="students">
+                <h2>My Students</h2>
+                <div id="students-container" class="cards-container">
+                    <div class="card" th:each="student : ${students}">
+                        <img th:src="@{/images/student_placeholder.png}" alt="Student Photo">
+                        <h3 th:text="${student.name}"></h3>
+                        <ul>
+                            <li th:each="course : ${student.courses}" th:text="${course.title}"></li>
+                        </ul>
+                        <a href="#" th:href="@{/profile/{id}(id=${student.id})}">View Profile</a>
+                    </div>
+                </div>
+                <div id="student-buttons">
+                    <button id="show-more-students">Show More</button>
+                    <button id="show-less-students">Show Less</button>
+                </div>
+            </section>
+        </div>
+    </section>
+</main>
+<footer>
+    <p>&copy; 2024 Your Company</p>
+</footer>
+</body>
+</html>

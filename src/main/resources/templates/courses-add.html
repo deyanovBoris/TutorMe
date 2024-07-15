@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head
+    th:include="fragments/head:: headerFragment (pageTitle = 'Courses')">
+</head>
+<body>
+
+<div th:replace="~{/fragments/color-toggle}">Color toggle</div>
+
+<div th:replace="~{fragments/header::navbar(activeLink=${'courses'})}">Header</div>
+
+<div class="b-example-divider"></div>
+
+<div class="container mt-5 mb-5" style="max-width: 1000px">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <h2 class="mb-4">Add New Course</h2>
+            <form th:action="@{/courses/all/add}"
+                  th:method="POST"
+                  th:object="${applicationData}">
+                <div class="form-group">
+                    <label for="title" class="mt-2 mb-1">Course Title</label>
+                    <input th:field="*{title}" type="text" class="form-control" id="title" name="title" placeholder="Enter course title" required>
+                    <small th:if="${#fields.hasErrors('title')}"
+                           th:errors="*{title}"
+                           class="text-danger" style="font-size: 15px">Title errors</small>
+                </div>
+                <div class="form-group">
+                    <label for="subject" class="mt-2 mb-1">Subject Category</label>
+                    <select multiple
+                            th:field="*{subjects}"
+                            class="form-control"
+                            size="7"
+                            id="subject"
+                            name="subject" required>
+                        <option th:each="subject : ${subjects}"
+                                th:value="${subject.id}"
+                                th:text="${subject.name}">Subject</option>
+                    </select>
+                    <small th:if="${#fields.hasErrors('subjects')}"
+                           th:errors="*{subjects}"
+                           class="text-danger" style="font-size: 15px">Subjects error message</small>
+                </div>
+                <div class="form-group">
+                    <label for="description" class="mt-2 mb-1">Course Description</label>
+                    <textarea class="form-control" id="description" name="description" rows="4" placeholder="Enter course description" required></textarea>
+                    <small th:if="${#fields.hasErrors('description')}"
+                           th:errors="*{description}"
+                           class="text-danger" style="font-size: 15px">Description error message</small>
+                </div>
+                <div class="form-group">
+                    <label for="courseType" class="mt-2 mb-1">Course type</label>
+
+                    <select th:field="*{courseType}"
+                            class="form-control"
+                            id="courseType"
+                            name="courseType" required>
+                        <option value="">Select course type</option>
+                        <option th:each="courseType : ${courseTypes}"
+                                th:value="${courseType}"
+                                th:text="${courseType}">Course type</option>
+                    </select>
+                    <small th:if="${#fields.hasErrors('courseType')}"
+                           th:errors="*{courseType}"
+                           class="text-danger" style="font-size: 15px">Course type error message</small>
+                </div>
+                <div class="form-group">
+                    <label for="startDate" class="mt-2 mb-1">Start Date</label>
+                    <input th:field="*{startDate}" type="date" class="form-control" id="startDate" name="startDate" required>
+                    <small th:if="${#fields.hasErrors('startDate')}"
+                           th:errors="*{startDate}"
+                           class="text-danger" style="font-size: 15px">Start date error message</small>
+                </div>
+                <div class="form-group">
+                    <label for="endDate" class="mt-2 mb-1">End Date</label>
+                    <input th:field="*{endDate}" type="date" class="form-control" id="endDate" name="endDate" required>
+                    <small th:if="${#fields.hasErrors('endDate')}"
+                           th:errors="*{endDate}"
+                           class="text-danger" style="font-size: 15px">End date error message</small>
+                </div>
+                <div class="form-group">
+                    <label for="imageUrl" class="mt-2 mb-1">Course Image URL</label>
+                    <input th:field="*{courseImageUrl}" type="url" class="form-control" id="imageUrl" name="imageUrl" placeholder="Enter image URL" required>
+                    <small th:if="${#fields.hasErrors('courseImageUrl')}"
+                           th:errors="*{courseImageUrl}"
+                           class="text-danger" style="font-size: 15px">Course image url error message</small>
+                </div>
+                <button type="submit" class="btn btn-primary  mt-4">Add Course</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="b-example-divider"></div>
+
+<div th:replace="~{fragments/footer}">Footer</div>
+
+<script src="/js/jquery-3.7.1.min.js"></script>
+<script src="/js/popper.min.js"></script>
+<script src="/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

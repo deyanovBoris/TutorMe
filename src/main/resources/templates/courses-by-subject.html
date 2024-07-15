@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:sec='http://www.thymeleaf.org/extras/spring-security'>
+<head>
+  <head th:include="fragments/head:: headerFragment (pageTitle =  ${subject} + ' Courses')">
+  </head>
+<body>
+
+<div th:replace="~{/fragments/color-toggle}">Color toggle</div>
+
+<div th:replace="~{fragments/header::navbar(activeLink=${'courses'})}">Header</div>
+
+<div class="b-example-divider"></div>
+
+<div class="container mt-4" style="min-height: 600px">
+  <div class="row">
+    <div class="col-12 d-flex justify-content-between align-items-center mb-4">
+      <h1><span th:text="${subject}"></span> Courses</h1>
+    </div>
+  </div>
+  <div th:if="${courses.size() == 0}" class="card-body" >
+    <h5>No courses present</h5>
+  </div>
+  <div class="row">
+    <div th:each="course : ${courses}" class="col-lg-3 col-md-5 mb-4 d-flex justify-content-center">
+
+      <a th:href="@{/}" class="card course-card" style="text-decoration: none">
+        <img th:src="@{${course.courseImageUrl}}" class="card-img-top course-image" alt="Course Image">
+        <div class="card-body course-body">
+          <h5 class="card-title" th:text="${course.title}">Course Title</h5>
+          <p class="card-text">
+            <strong>Offered by: </strong> <span th:text="${course.instructorName}">Instructor Name</span><br>
+            <strong>Duration: </strong> <span th:text="${course.durationInWeeks}">Duration</span><br>
+            <strong>Description: </strong> <span th:text="${course.description}">Course Description</span>
+          </p>
+        </div>
+      </a>
+    </div>
+  </div>
+  <!-- Pagination -->
+  <!--  <nav aria-label="Page navigation">-->
+  <!--    <ul class="pagination justify-content-center">-->
+  <!--      <li class="page-item" th:classappend="${pageable.hasPrevious()} ? '' : 'disabled'">-->
+  <!--        <a class="page-link" th:href="@{?page=${pageable.pageNumber-1}}">Previous</a>-->
+  <!--      </li>-->
+  <!--      <li class="page-item" th:each="pageNum : ${#numbers.sequence(0, pageable.totalPages-1)}"-->
+  <!--          th:classappend="${pageNum} == ${pageable.pageNumber} ? 'active' : ''">-->
+  <!--        <a class="page-link" th:href="@{?page=${pageNum}}" th:text="${pageNum+1}">1</a>-->
+  <!--      </li>-->
+  <!--      <li class="page-item" th:classappend="${pageable.hasNext()} ? '' : 'disabled'">-->
+  <!--        <a class="page-link" th:href="@{?page=${pageable.pageNumber+1}}">Next</a>-->
+  <!--      </li>-->
+  <!--    </ul>-->
+  <!--  </nav>-->
+
+</div>
+
+<div class="b-example-divider"></div>
+
+<div th:replace="~{fragments/footer}">Footer</div>
+
+<script src="/js/jquery-3.7.1.min.js"></script>
+<script src="/js/popper.min.js"></script>
+<script src="/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

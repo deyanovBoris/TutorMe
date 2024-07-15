@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .login-form {
+            width: 360px;
+            margin: 100px auto;
+            padding: 30px;
+            background: #fff;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        .login-form h2 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-control {
+            height: 40px;
+        }
+        .remember-checkbox {
+            margin-top: 10px;
+        }
+        .login-btn {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="login-form">
+        <h2>Login</h2>
+        <form th:action="@{/login}"
+              th:method="POST"
+              th:object="${loginUserData}">
+            <div class="form-group">
+                <label for="username">Username or Email</label>
+                <input th:field="*{username}"
+                       type="text"
+                       class="form-control"
+                       id="username"
+                       name="username"
+                       min = 4 max = 20
+                       required>
+                <small th:if="${#fields.hasErrors('username')}"
+                       th:errors="*{username}"
+                       class="danger">Username error message</small>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input th:field="*{password}"
+                       type="password"
+                       class="form-control"
+                       id="password"
+                       name="password"
+                       min = 8
+                       required>
+                <small th:if="${#fields.hasErrors('password')}"
+                       th:errors="*{password}"
+                       class="danger">Password error message</small>
+            </div>
+            <small th:if="${showErrorMessage}" class="text-danger">Invalid username or password</small>
+            <div class="form-group form-check remember-checkbox">
+                <input type="checkbox" class="form-check-input" id="remember">
+                <label class="form-check-label" for="remember">Remember me</label>
+                <div class="mb-2 mt-2">
+                    Don't have an account?
+                    <a th:href="@{/register}">Register</a>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary login-btn">Login</button>
+
+        </form>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

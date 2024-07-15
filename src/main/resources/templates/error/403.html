@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Access Forbidden</title>
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .forbidden-container {
+            text-align: center;
+            padding: 30px;
+            background: #fff;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        .forbidden-container img {
+            width: 150px;
+            margin-bottom: 20px;
+        }
+        .forbidden-container h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+        .forbidden-container p {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+        .home-btn {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+<div class="container forbidden-container">
+    <img src="/images/403_image" alt="Forbidden">
+    <h1>Forbidden</h1>
+    <p>You do not have permission to access this page.</p>
+    <a th:href="@{/static}" class="btn btn-primary home-btn">Go to Homepage</a>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

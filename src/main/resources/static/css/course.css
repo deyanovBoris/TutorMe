@@ -1,0 +1,54 @@
+.hero-section {
+    /*background-color: #c1dfff;*/
+    padding: 30px;
+    text-align: center;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.course-photo {
+    max-width: 100%;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card-shadow {
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.student-card {
+    width: 100px;
+    margin: 10px;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.student-photo {
+    width: 100%;
+    border-radius: 0.5rem 0.5rem 0 0;
+}
+
+.student-name {
+    padding: 10px;
+    font-size: 0.9rem;
+}
+
+.instructor-photo {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin: 0 auto;
+}
+
+.enroll-button {
+    width: 50%;
+    border-radius: 0.5rem;
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}

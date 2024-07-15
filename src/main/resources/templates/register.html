@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Page</title>
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .register-form {
+            width: 360px;
+            margin: 100px auto;
+            padding: 30px;
+            background: #fff;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        .register-form h2 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-control {
+            height: 40px;
+        }
+        .register-btn {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="register-form">
+        <h2 th:text="#{register.header}">Register</h2>
+        <form th:action="@{/register}"
+              th:method="POST"
+              th:object="${userRegisterObject}">
+            <div class="form-group">
+                <label th:for="username">Username</label>
+                <input th:field="*{username}"
+                       type="text"
+                       placeholder="Username"
+                       class="form-control"
+                       min = 4, max = 20
+                       required>
+                <small th:if="${#fields.hasErrors('username')}"
+                       th:errors="*{username}"
+                       class="danger" style="font-size: 15px">Username error message</small>
+            </div>
+            <div class="form-group">
+                <label th:for="fullName">Full Name</label>
+                <input th:field="*{fullName}"
+                       type="text"
+                       placeholder="Full Name"
+                       class="form-control"
+                       min = 2, max = 50
+                       required>
+                <small th:if="${#fields.hasErrors('fullName')}"
+                       th:errors="*{fullName}"
+                       class="danger" style="font-size: 15px">Fullname error message</small>
+
+            </div>
+            <div class="form-group">
+                <label th:for="email">Email</label>
+                <input th:field="*{email}"
+                       type="email"
+                       placeholder="Email"
+                       class="form-control"
+                       required>
+                <small th:if="${#fields.hasErrors('email')}"
+                       th:errors="*{email}"
+                       class="danger" style="font-size: 15px">Email error message</small>
+
+            </div>
+            <div class="form-group">
+                <label th:for="password">Password</label>
+                <input th:field="*{password}"
+                       type="password"
+                       placeholder="Password"
+                       class="form-control"
+                       min = 8
+                       required>
+                <small th:if="${#fields.hasErrors('password')}"
+                       th:errors="*{password}"
+                       class="danger" style="font-size: 15px">Password error message</small>
+
+            </div>
+            <div class="form-group">
+                <label th:for="confirmPassword">Confirm Password</label>
+                <input th:field="*{confirmPassword}"
+                       type="password"
+                       placeholder="Confirm Password"
+                       class="form-control"
+                       min = 8
+                       required>
+                <small th:if="${#fields.hasErrors('confirmPassword')}"
+                       th:errors="*{confirmPassword}"
+                       class="danger" style="font-size: 15px">Password error message</small>
+                <small th:if="${passwordsDoNotMatch}"
+                       class="danger" style="font-size: 15px">Passwords do not match!</small>
+
+            </div>
+            <button type="submit" class="btn btn-primary register-btn">Register</button>
+        </form>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

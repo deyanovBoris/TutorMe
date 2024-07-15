@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:sec='http://www.thymeleaf.org/extras/spring-security'>
+<head>
+  <head th:include="fragments/head:: headerFragment (pageTitle = 'Courses')">
+</head>
+<body>
+
+<div th:replace="~{/fragments/color-toggle}">Color toggle</div>
+
+<div th:replace="~{fragments/header::navbar(activeLink=${'courses'})}">Header</div>
+
+<div class="b-example-divider"></div>
+
+<div class="container mt-4" style="min-height: 600px">
+  <div class="row">
+    <div class="col-12 d-flex justify-content-between align-items-center mb-4">
+      <h1>Courses</h1>
+      <!-- Add Course Button for TUTOR -->
+      <div sec:authorize="hasRole('TUTOR')">
+        <a th:href="@{/courses/all/add}" class="btn btn-success btn-lg">
+          <i class="fas fa-plus"></i> +
+        </a>
+      </div>
+    </div>
+  </div>
+  <div th:if="${courses.size() == 0}" class="card-body" >
+    <h5>No courses present</h5>
+  </div>
+  <div class="row">
+    <div th:each="course : ${courses}" class="col-lg-3 col-md-5 mb-4 d-flex justify-content-center">
+
+      <a th:href="@{/course/{id}(id=${course.id})}" class="card course-card" style="text-decoration: none">
+        <img th:src="@{${course.courseImageUrl}}" class="card-img-top course-image" alt="Course Image">
+        <div class="card-body course-body">
+          <h5 class="card-title" th:text="${course.title}">Course Title</h5>
+          <p class="card-text">
+            <strong>Offered by: </strong> <span th:text="${course.instructorName}">Instructor Name</span><br>
+            <strong>Duration: </strong> <span th:text="${course.durationInWeeks}">Duration</span><br>
+            <strong>Description: </strong> <span th:text="${course.description}">Course Description</span>
+          </p>
+        </div>
+      </a>
+    </div>
+  </div>
+  <!-- Pagination -->
+  <div th:if = "${totalPages > 1}">
+    <div class = "row col-sm-10">
+      <div class = "col-sm-2">
+        Total Rows: [[${totalItems}]]
+      </div>
+      <div class = "col-sm-2">
+					<span th:each="i: ${#numbers.sequence(1, totalPages)}">
+						<a th:if="${currentPage != i}" th:href="@{'/courses/all/' + ${i}}">[[${i}]]</a>
+						<span th:unless="${currentPage != i}">[[${i}]]</span>  &nbsp; &nbsp;
+					</span>
+      </div>
+      <div class = "col-sm-2">
+        <a th:if="${currentPage < totalPages}" th:href="@{'/courses/all/' + ${currentPage + 1}}">Next</a>
+        <span th:unless="${currentPage < totalPages}">Next</span>
+      </div>
+
+      <div class="col-sm-2">
+        <a th:if="${currentPage < totalPages}" th:href="@{'/courses/all/' + ${totalPages}}">Last</a>
+        <span th:unless="${currentPage < totalPages}">Last</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="b-example-divider"></div>
+
+<div th:replace="~{fragments/footer}">Footer</div>
+
+<script src="/js/jquery-3.7.1.min.js"></script>
+<script src="/js/popper.min.js"></script>
+<script src="/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
