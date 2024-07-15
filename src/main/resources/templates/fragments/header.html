@@ -14,11 +14,13 @@
             <li>
                 <a th:href="@{/}"
                    class="nav-link px-2"
+                   th:text="#{nav_bar_home}"
                    th:classappend="${activeLink == 'home'} ? 'text-secondary'">Home</a>
             </li>
             <li>
                 <a th:href="@{/courses/all/1}"
                    class="nav-link px-2"
+                   th:text="#{nav_bar_courses}"
                    th:classappend="${activeLink == 'courses'} ? 'text-secondary'">Courses</a>
             </li>
             <li>
@@ -30,6 +32,7 @@
             <li sec:authorize="!hasRole('TUTOR')">
                 <a th:href="@{/start-tutoring}"
                    class="nav-link px-2"
+                   th:text="#{nav_bar_start_tutoring}"
                    th:classappend="${activeLink == 'start-tutoring'} ? 'text-secondary'">Start Tutoring</a>
             </li>
             <li>
@@ -39,21 +42,27 @@
                 <a href="#" class="nav-link px-2">Profile</a>
             </li>
             <li sec:authorize="hasRole('ADMIN')">
-                <a th:href="@{/admin/tutor-applications}" class="nav-link px-2">Admin</a>
+                <a th:href="@{/admin/tutor-applications}" class="nav-link px-2" th:text="#{nav_bar_admin}">Admin</a>
             </li>
         </ul>
 
         <div class="col-md-3 text-end">
             <th:block sec:authorize="!isAuthenticated()">
-                <a th:href="@{/login}" role="button" class="btn btn-outline-primary me-2">Login</a>
-                <a th:href="@{/register}" role="button" class="btn btn-primary">Sign-up</a>
+                <a th:href="@{/login}"
+                   role="button"
+                   class="btn btn-outline-primary me-2"
+                   th:text="#{nav_bar_login}">Login</a>
+                <a th:href="@{/register}"
+                   role="button"
+                   class="btn btn-primary"
+                   th:text="#{nav_bar_registration}">Sign-up</a>
             </th:block>
 
             <form sec:authorize="isAuthenticated()"
                   th:method = "POST"
                   th:action="@{/logout}">
                 <label sec:authorize="isAuthenticated()" class="text-primary me-2">Welcome, <span sec:authentication="name"></span> </label>
-                <button type="submit" class="btn btn-primary" th:text="Logout"></button>
+                <button type="submit" class="btn btn-primary" th:text="#{nav_bar_logout}"></button>
             </form>
 
             <form th:method="GET" class="mt-2">
