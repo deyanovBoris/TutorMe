@@ -7,11 +7,11 @@ import jakarta.validation.constraints.Size;
 
 public class UserRegisterDTO {
 
-    @NotEmpty(message = "{register.user.username.not.empty}")
-    @Size(min = 4, max = 20, message = "{register.user.username.sizing}")
+    @NotNull(message = "{register_user_username_sizing}")
+    @Size(min = 4, max = 20, message = "{register_user_username_sizing}")
     private String username;
-    @NotEmpty
-    @Size(min = 2, max = 50)
+    @NotNull(message = "{register_user_full_name_sizing}")
+    @Size(min = 2, max = 50, message = "{register_user_full_name_sizing}")
     private String fullName;
     @NotEmpty
     @Email
