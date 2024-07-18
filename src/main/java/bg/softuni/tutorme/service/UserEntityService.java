@@ -7,4 +7,6 @@ public interface UserEntityService {
     boolean registerUser(UserRegisterDTO userRegisterDTO);
 
     String getUserIdByUsername(String username) throws UserNotFoundException;
+
+    boolean isEnrolledInCourse(String username, long courseId) throws UserNotFoundException;
 }

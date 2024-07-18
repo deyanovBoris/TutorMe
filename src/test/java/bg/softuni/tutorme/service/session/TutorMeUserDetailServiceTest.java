@@ -1,4 +1,4 @@
-package bg.softuni.tutorme.service.impl;
+package bg.softuni.tutorme.service.session;
 
 import bg.softuni.tutorme.entities.UserEntity;
 import bg.softuni.tutorme.entities.UserRoleEntity;

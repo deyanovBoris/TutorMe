@@ -5,6 +5,7 @@ import bg.softuni.tutorme.entities.dtos.courses.CourseShortInfoDTO;
 import bg.softuni.tutorme.entities.enums.CourseType;
 import bg.softuni.tutorme.service.CourseService;
 import bg.softuni.tutorme.service.SubjectService;
+import bg.softuni.tutorme.service.UserEntityService;
 import bg.softuni.tutorme.service.exceptions.UserNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
@@ -25,10 +26,12 @@ public class CourseController {
 
     private final SubjectService subjectService;
     private final CourseService courseService;
+    private final UserEntityService userEntityService;
 
-    public CourseController(SubjectService subjectService, CourseService courseService) {
+    public CourseController(SubjectService subjectService, CourseService courseService, UserEntityService userEntityService) {
         this.subjectService = subjectService;
         this.courseService = courseService;
+        this.userEntityService = userEntityService;
     }
 
     @ModelAttribute("applicationData")
@@ -89,8 +92,26 @@ public class CourseController {
     }
 
     @GetMapping("/course/{id}")
-    public String courseById(@PathVariable("id") long id, Model model){
+    public String courseById(@PathVariable("id") long id, Model model, Principal principal) throws UserNotFoundException {
         model.addAttribute("course", this.courseService.getCourseById(id));
+
+        if (this.userEntityService.isEnrolledInCourse(principal.getName(), id)
+                || this.courseService.isCourseOwner(principal.getName(), id)){
+            model.addAttribute("isAlreadyEnrolled", true);
+        }
+
         return "course";
+    }
+
+    @PostMapping("/course/enroll/{id}")
+    public String enrollInCourse(@PathVariable("id") long id, Model model, Principal principal) throws UserNotFoundException {
+        if (this.userEntityService.isEnrolledInCourse(principal.getName(), id)
+                || this.courseService.isCourseOwner(principal.getName(), id)){
+            return "redirect:/course/{id}";
+        }
+
+        this.courseService.enrollInCourse(principal.getName(), id);
+
+        return "redirect:/course/{id}";
     }
 }

@@ -3,12 +3,14 @@ package bg.softuni.tutorme.service.impl;
 import bg.softuni.tutorme.entities.UserEntity;
 import bg.softuni.tutorme.entities.enums.UserRoleEnum;
 import bg.softuni.tutorme.entities.dtos.UserRegisterDTO;
+import bg.softuni.tutorme.repositories.CourseRepository;
 import bg.softuni.tutorme.repositories.RoleRepository;
 import bg.softuni.tutorme.repositories.UserRepository;
 import bg.softuni.tutorme.service.UserEntityService;
 import bg.softuni.tutorme.service.exceptions.UserNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -49,6 +51,16 @@ public class UserEntityServiceImpl implements UserEntityService {
         return this.userRepository.findByUsername(username)
                 .orElseThrow(UserNotFoundException::new)
                 .getId() + "";
+    }
+
+    @Override
+    @Transactional
+    public boolean isEnrolledInCourse(String username, long courseId) throws UserNotFoundException {
+        return this.userRepository.findByUsername(username)
+                .orElseThrow(UserNotFoundException::new)
+                .getCoursesAttending()
+                .stream()
+                .anyMatch(course -> course.getId() == courseId);
     }
 
     private UserEntity mapToUser(UserRegisterDTO userRegisterDTO) {

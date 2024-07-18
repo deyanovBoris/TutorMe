@@ -6,6 +6,7 @@ import bg.softuni.tutorme.entities.dtos.StudentsShortInfoDto;
 import java.util.List;
 
 public class CourseInfoDTO {
+    private long id;
 
     private String title;
 
@@ -26,6 +27,15 @@ public class CourseInfoDTO {
 
     public CourseInfoDTO setTitle(String title) {
         this.title = title;
+        return this;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public CourseInfoDTO setId(long id) {
+        this.id = id;
         return this;
     }
 

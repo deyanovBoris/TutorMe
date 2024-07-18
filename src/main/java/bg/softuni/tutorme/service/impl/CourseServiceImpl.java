@@ -32,7 +32,6 @@ public class CourseServiceImpl implements CourseService {
     private final ModelMapper modelMapper;
     private final CourseRepository courseRepository;
     private final UserRepository userRepository;
-
     private final SubjectRepository subjectRepository;
 
     public CourseServiceImpl(ModelMapper modelMapper, CourseRepository courseRepository, UserRepository userRepository, SubjectRepository subjectRepository) {
@@ -110,6 +109,7 @@ public class CourseServiceImpl implements CourseService {
                 .map(s -> new StudentsShortInfoDto()
                         .setName(s.getName())
                         .setPhotoUrl(s.getProfilePhotoUrl()))
+                .limit(5)
                 .collect(Collectors.toList());
 
         InstructorDTO instructor = new InstructorDTO()
@@ -121,5 +121,31 @@ public class CourseServiceImpl implements CourseService {
         courseInfoDTO.setInstructor(instructor);
 
         return courseInfoDTO;
+    }
+
+    @Override
+    @Transactional
+    public boolean enrollInCourse(String username, long courseId) throws UserNotFoundException {
+        UserEntity user = this.userRepository.findByUsername(username).orElseThrow(UserNotFoundException::new);
+
+        Course course = this.courseRepository.findById(courseId)
+                .orElseThrow(() -> new ObjectNotFoundException("Course", courseId));//todo FixException to not be hibernate
+
+        course.getStudents().add(user);
+        user.getCoursesAttending().add(course);
+
+        this.courseRepository.save(course);
+        this.userRepository.save(user);
+
+        return true;
+    }
+
+    @Override
+    public boolean isCourseOwner(String username, long courseId) {
+        return this.courseRepository.findById(courseId)
+                .orElseThrow(() -> new ObjectNotFoundException("Course", courseId))//todo FixException to not be hibernate
+                .getCourseOwner()
+                .getUsername()
+                .equals(username);
     }
 }

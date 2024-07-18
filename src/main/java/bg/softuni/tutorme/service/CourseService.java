@@ -21,4 +21,8 @@ public interface CourseService {
     Page<CourseShortInfoDTO> findPaginated(int pageNo, int pageSize);
 
     CourseInfoDTO getCourseById(long id);
+
+    boolean enrollInCourse(String username, long courseId) throws UserNotFoundException;
+
+    boolean isCourseOwner(String username, long courseId);
 }

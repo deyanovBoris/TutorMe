@@ -33,7 +33,11 @@
         <img th:src="${course.instructor.photoUrl}" class="instructor-photo mb-3" alt="Instructor Photo">
 <!--        <p th:text="'Term: ' + ${course.term}">Term</p>-->
         <p th:text="'Instructor: ' + ${course.instructor.name}">Instructor</p>
-        <button class="btn btn-primary enroll-button">Enroll</button>
+        <form th:action="@{/course/enroll/{id}(id=${course.getId()})}" th:method="POST">
+          <button th:if="${isAlreadyEnrolled}" type="submit" class="btn btn-primary enroll-button" disabled>Enroll</button>
+          <button th:unless="${isAlreadyEnrolled}" type="submit" class="btn btn-primary enroll-button">Enroll</button>
+        </form>
+
       </div>
     </div>
 
