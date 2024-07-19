@@ -36,6 +36,7 @@ public class TutorMeUserDetailsService implements UserDetailsService {
 
     private static UserDetails map(UserEntity userEntity){
         return new TutorMeUserDetails(
+                userEntity.getId(),
                 userEntity.getUsername(),
                 userEntity.getPassword(),
                 userEntity.getRoles()

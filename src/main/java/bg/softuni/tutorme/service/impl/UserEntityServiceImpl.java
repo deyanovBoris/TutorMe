@@ -3,16 +3,20 @@ package bg.softuni.tutorme.service.impl;
 import bg.softuni.tutorme.entities.UserEntity;
 import bg.softuni.tutorme.entities.enums.UserRoleEnum;
 import bg.softuni.tutorme.entities.dtos.UserRegisterDTO;
+import bg.softuni.tutorme.entities.user.TutorMeUserDetails;
 import bg.softuni.tutorme.repositories.CourseRepository;
 import bg.softuni.tutorme.repositories.RoleRepository;
 import bg.softuni.tutorme.repositories.UserRepository;
 import bg.softuni.tutorme.service.UserEntityService;
 import bg.softuni.tutorme.service.exceptions.UserNotFoundException;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserEntityServiceImpl implements UserEntityService {
@@ -61,6 +65,16 @@ public class UserEntityServiceImpl implements UserEntityService {
                 .getCoursesAttending()
                 .stream()
                 .anyMatch(course -> course.getId() == courseId);
+    }
+
+    @Override
+    public Optional<TutorMeUserDetails> getCurrentUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null &&
+                authentication.getPrincipal() instanceof TutorMeUserDetails tutorMeUserDetails) {
+            return Optional.of(tutorMeUserDetails);
+        }
+        return Optional.empty();
     }
 
     private UserEntity mapToUser(UserRegisterDTO userRegisterDTO) {
