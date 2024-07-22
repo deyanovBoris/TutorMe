@@ -1,6 +1,7 @@
 package bg.softuni.tutorme.service.impl;
 
 import bg.softuni.tutorme.entities.UserEntity;
+import bg.softuni.tutorme.entities.dtos.TutorFeatureDTO;
 import bg.softuni.tutorme.entities.enums.UserRoleEnum;
 import bg.softuni.tutorme.entities.dtos.UserRegisterDTO;
 import bg.softuni.tutorme.entities.user.TutorMeUserDetails;
@@ -17,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class UserEntityServiceImpl implements UserEntityService {
@@ -75,6 +77,21 @@ public class UserEntityServiceImpl implements UserEntityService {
             return Optional.of(tutorMeUserDetails);
         }
         return Optional.empty();
+    }
+
+    @Override
+    @Transactional
+    public List<TutorFeatureDTO> getFeaturedTutors() {
+        return this.userRepository.findAllByIsFeaturedTrue()
+                .stream()
+                .filter(u -> u.getRoles().stream().anyMatch(r -> r.getRole().name().equals("TUTOR")))
+                .limit(3)
+                .map(u -> new TutorFeatureDTO()
+                        .setName(u.getName())
+                        .setUsername(u.getUsername())
+                        .setBiography(u.getBiography())
+                        .setProfilePhotoUrl(u.getProfilePhotoUrl()))
+                .collect(Collectors.toList());
     }
 
     private UserEntity mapToUser(UserRegisterDTO userRegisterDTO) {

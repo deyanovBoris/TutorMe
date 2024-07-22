@@ -1,5 +1,6 @@
 package bg.softuni.tutorme.web;
 
+import bg.softuni.tutorme.entities.dtos.TutorFeatureDTO;
 import bg.softuni.tutorme.entities.dtos.subjects.SubjectFeatureDTO;
 import bg.softuni.tutorme.repositories.SubjectRepository;
 import bg.softuni.tutorme.service.SubjectService;
@@ -70,8 +71,10 @@ public class HomeController {
     @GetMapping("/")
     public String index(Model model){
         List<SubjectFeatureDTO> featuredSubjects = this.subjectService.getFeaturedSubjects();
+        List<TutorFeatureDTO> tutorFeatureDTOS = this.userEntityService.getFeaturedTutors();
 
         model.addAttribute("featuredSubjects",  featuredSubjects);
+        model.addAttribute("featuredTutors", tutorFeatureDTOS);
 
         return "index";
     }
