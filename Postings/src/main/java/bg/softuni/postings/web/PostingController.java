@@ -4,10 +4,13 @@ import bg.softuni.postings.entities.dtos.AddPostingDTO;
 import bg.softuni.postings.entities.dtos.PostDTO;
 import bg.softuni.postings.services.PostingService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import java.util.List;
 
 @RestController
 public class PostingController {
@@ -33,5 +36,12 @@ public class PostingController {
                                 .buildAndExpand(postDTO.getId())
                                 .toUri()
                 ).body(postDTO);
+    }
+
+    @GetMapping("/posts/all")
+    public ResponseEntity<List<PostDTO>> getAllPosts(){
+        return ResponseEntity.ok(
+                this.postingService.getAllPosts()
+        );
     }
 }

@@ -24,7 +24,9 @@
                    th:classappend="${activeLink == 'courses'} ? 'text-secondary'">Courses</a>
             </li>
             <li>
-                <a href="#" class="nav-link px-2">Pricing</a>
+                <a th:href="@{/posts/all}"
+                   class="nav-link px-2"
+                   th:classappend="${activeLink == 'posts'} ? 'text-secondary'">Posts</a>
             </li>
             <li>
                 <a href="#" class="nav-link px-2">FAQs</a>

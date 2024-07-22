@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <head th:include="fragments/head:: headerFragment (pageTitle = 'Posts')">
+</head>
+<body>
+
+<div th:replace="~{/fragments/color-toggle}">Color toggle</div>
+
+<div th:replace="~{fragments/header::navbar(activeLink=${'posts'})}">Header</div>
+
+<div class="b-example-divider"></div>
+
+<div class="container mt-5 mb-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <!-- Post Card 1 -->
+            <div th:each="post : ${posts}" class="post-card bg-light">
+                <div th:object="${post}" class="post-header">
+                    <img th:src="*{user.getProfilePhotoUrl()}" alt="User Photo" class="user-photo">
+                    <div>
+                        <h5 th:text="*{user.getUsername()}" class="mb-0">Username1</h5>
+                        <small class="text-muted">Posted on <span th:text="*{postingDate}"></span></small>
+                    </div>
+                </div>
+                <p th:text="${post.getPostContent()}">This is the content of the first post. It can be any text that the user wants to share.</p>
+            </div>
+
+            <!-- Add more posts as needed -->
+        </div>
+    </div>
+</div>
+
+<div class="b-example-divider"></div>
+
+<div th:replace="~{fragments/footer}">Footer</div>
+
+<script src="/js/jquery-3.7.1.min.js"></script>
+<script src="/js/popper.min.js"></script>
+<script src="/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

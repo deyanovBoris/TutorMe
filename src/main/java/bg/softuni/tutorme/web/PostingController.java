@@ -6,6 +6,7 @@ import bg.softuni.tutorme.service.UserEntityService;
 import bg.softuni.tutorme.service.exceptions.UserNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,10 +36,19 @@ public class PostingController {
     }
 
     @PostMapping("/post/add-post")
-    public String doAddPost(@Valid AddPostingDTO addPostingDTO, Principal principal) throws UserNotFoundException {
-        addPostingDTO.setUserId(Long.parseLong(this.userEntityService.getUserIdByUsername(principal.getName())));
-        this.postingService.createPost(addPostingDTO);
+    public String doAddPost(@Valid AddPostingDTO addPostingDTO, Principal principal) {
+        this.postingService.createPost(addPostingDTO, principal);
 
         return "redirect:/";
     }
+
+    @GetMapping("/posts/all")
+    public String allPosts(Model model){
+
+        model.addAttribute("posts", this.postingService.getAllPosts());
+
+        return "posts";
+    }
+
+
 }

@@ -9,6 +9,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class PostingServiceImpl implements PostingService {
@@ -30,5 +32,27 @@ public class PostingServiceImpl implements PostingService {
         this.postingRepository.save(posting);
         PostDTO map = modelMapper.map(posting, PostDTO.class);
         return map;
+    }
+
+    @Override
+    public void deletePost(Long offerId) {
+
+    }
+
+    @Override
+    public PostDTO getPostById(Long id) {
+        return null;
+    }
+
+    @Override
+    public List<PostDTO> getAllPosts() {
+        return this.postingRepository.findAll()
+                .stream()
+                .map(p -> new PostDTO()
+                        .setPostContent(p.getPostContent())
+                        .setPostingDate(p.getPostingDate())
+                        .setId(p.getId())
+                        .setUserId(p.getUserId()))
+                .collect(Collectors.toList());
     }
 }
