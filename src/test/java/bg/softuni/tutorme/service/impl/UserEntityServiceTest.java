@@ -16,6 +16,7 @@ import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Optional;
@@ -34,12 +35,16 @@ public class UserEntityServiceTest {
     @Mock
     private PasswordEncoder mockPasswordEncoder;
 
+    @Mock
+    private ModelMapper modelMapper;
+
     @BeforeEach
     void setUp(){
         toTest = new UserEntityServiceImpl(
                 mockUserRepository,
                 mockRoleRepository,
-                mockPasswordEncoder
+                mockPasswordEncoder,
+                modelMapper
         );
     }
 
