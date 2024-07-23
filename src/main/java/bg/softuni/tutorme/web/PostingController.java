@@ -31,7 +31,6 @@ public class PostingController {
 
     @GetMapping("/post/add-post")
     public String addPost(){
-
         return "add-post";
     }
 
@@ -44,7 +43,7 @@ public class PostingController {
 
     @GetMapping("/posts/all")
     public String allPosts(Model model){
-
+        model.addAttribute("postsPageStyling", true);
         model.addAttribute("posts", this.postingService.getAllPosts());
 
         return "posts";

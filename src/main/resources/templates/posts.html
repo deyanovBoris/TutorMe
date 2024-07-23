@@ -14,9 +14,9 @@
 
 <div class="container mt-5 mb-4">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-8" style="max-height: 600px; overflow-y: auto;">
             <!-- Post Card 1 -->
-            <div th:each="post : ${posts}" class="post-card bg-light">
+            <div th:each="post : ${posts}" class="post-card border">
                 <div th:object="${post}" class="post-header">
                     <img th:src="*{user.getProfilePhotoUrl()}" alt="User Photo" class="user-photo">
                     <div>

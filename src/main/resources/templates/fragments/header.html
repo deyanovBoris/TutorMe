@@ -42,7 +42,11 @@
                 <a href="#" class="nav-link px-2">About</a>
             </li>
             <li sec:authorize="isAuthenticated()">
-                <a href="#" class="nav-link px-2">Profile</a>
+                <a  href="#"
+                    class="nav-link px-2"
+                    th:text="#{nav_bar_profile}"
+                    th:classappend="${activeLink == 'profile'} ? 'text-secondary'"
+                        >Profile</a>
             </li>
             <li sec:authorize="hasRole('ADMIN')">
                 <a th:href="@{/admin/tutor-applications}" class="nav-link px-2" th:text="#{nav_bar_admin}">Admin</a>

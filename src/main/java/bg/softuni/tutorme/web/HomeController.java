@@ -52,6 +52,7 @@ public class HomeController {
         }
 
         model.addAttribute("userId", id);
+        model.addAttribute("profilePageStyle", true);
 
         return "profile";
     }
@@ -73,6 +74,8 @@ public class HomeController {
         List<SubjectFeatureDTO> featuredSubjects = this.subjectService.getFeaturedSubjects();
         List<TutorFeatureDTO> tutorFeatureDTOS = this.userEntityService.getFeaturedTutors();
 
+
+        model.addAttribute("homePageStyles", true);
         model.addAttribute("featuredSubjects",  featuredSubjects);
         model.addAttribute("featuredTutors", tutorFeatureDTOS);
 

@@ -42,6 +42,8 @@ public class CourseController {
     @GetMapping("/courses/all/{pageNo}")
     public String getAllCourses(@PathVariable("pageNo") int pageNo, Model model){
 
+        model.addAttribute("coursesPageStyling", true);
+
         Page<CourseShortInfoDTO> page = this.courseService.findPaginated(pageNo, 8);
         List<CourseShortInfoDTO> courses = page.getContent();
 
@@ -93,6 +95,7 @@ public class CourseController {
 
     @GetMapping("/course/{id}")
     public String courseById(@PathVariable("id") long id, Model model, Principal principal) throws UserNotFoundException {
+        model.addAttribute("coursePageStyling", true);
         model.addAttribute("course", this.courseService.getCourseById(id));
 
         if (this.userEntityService.isEnrolledInCourse(principal.getName(), id)
