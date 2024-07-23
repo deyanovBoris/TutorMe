@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 
 import java.security.Principal;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -51,6 +52,7 @@ public class PostingServiceImpl implements PostingService {
                         .setProfilePhotoUrl(user.getProfilePhotoUrl());
                     return p;
                 })
+                .sorted(Comparator.comparing(PostDetailDTO::getPostingDate).reversed())
                 .collect(Collectors.toList());
     }
 

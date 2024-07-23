@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec='http://www.thymeleaf.org/extras/spring-security'>
 <head>
     <head th:include="fragments/head:: headerFragment (pageTitle = 'Posts')">
 </head>
@@ -12,22 +13,47 @@
 
 <div class="b-example-divider"></div>
 
-<div class="container mt-5 mb-4">
+
+
+<div class="container mt-4 mb-5">
+    <div class="row">
+        <div class="col-12 d-flex justify-content-between align-items-center mb-4">
+            <h1>Posts</h1>
+<!--            <a th:href="@{/post/add-post}" class="btn btn-success btn-lg">-->
+<!--                <i class="fas fa-plus"></i> +-->
+<!--            </a>-->
+        </div>
+    </div>
     <div class="row justify-content-center">
-        <div class="col-md-8" style="max-height: 600px; overflow-y: auto;">
+        <div class="col-md-8 mb-1" style="max-height: 600px; overflow-y: auto;">
             <!-- Post Card 1 -->
             <div th:each="post : ${posts}" class="post-card border">
                 <div th:object="${post}" class="post-header">
                     <img th:src="*{user.getProfilePhotoUrl()}" alt="User Photo" class="user-photo">
                     <div>
                         <h5 th:text="*{user.getUsername()}" class="mb-0">Username1</h5>
-                        <small class="text-muted">Posted on <span th:text="*{postingDate}"></span></small>
+                        <small class="text-muted">Posted on <span th:text="${#temporals.format(post.getPostingDate(), 'dd-MM-yyyy HH:mm')}"></span></small>
                     </div>
                 </div>
                 <p th:text="${post.getPostContent()}">This is the content of the first post. It can be any text that the user wants to share.</p>
             </div>
 
             <!-- Add more posts as needed -->
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="post-container bg-light" style="border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);padding: 20px;margin-top: 50px;">
+                    <form th:action="@{/post/add-post}"
+                          th:method="POST"
+                          th:object="${addPostData}">
+                        <div class="form-group">
+                            <label for="postText">Your Post</label>
+                            <textarea th:field="*{postContent}" class="form-control" id="postText" rows="4" placeholder="Write your post here..."></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block mt-3">Submit</button>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 </div>

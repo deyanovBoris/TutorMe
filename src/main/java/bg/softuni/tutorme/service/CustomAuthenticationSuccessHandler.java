@@ -26,11 +26,8 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
                                         Authentication authentication) throws IOException, ServletException {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         String username = userDetails.getUsername();
-        // Assume that the user ID can be retrieved from the username, modify as necessary
-        // Here we mock a user ID retrieval process
-        long userId = this.userRepository.findByUsername(userDetails.getUsername()).get().getId();
 
-        String redirectUrl = "/user/" + userId;
+        String redirectUrl = "/user/" + username;
         response.sendRedirect(redirectUrl);
     }
 }

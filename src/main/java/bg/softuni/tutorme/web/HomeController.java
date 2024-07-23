@@ -30,28 +30,25 @@ public class HomeController {
         this.subjectService = subjectService;
     }
 
-    @GetMapping("/user/{id}")
+    @GetMapping("/user/{username}")
 //    @PreAuthorize("hasRole('ADMIN')")
-    public String dashboard(@PathVariable("id") String id, Model model, Principal principal) throws UserNotFoundException {
+    public String dashboard(@PathVariable("username") String username, Model model, Principal principal) throws UserNotFoundException {
 
 //        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String username;
+        String usernamePrincipal;
         if (principal instanceof UserDetails) {
-            username = ((UserDetails) principal).getUsername();
+            usernamePrincipal = ((UserDetails) principal).getUsername();
         } else {
-            username = principal.getName();
+            usernamePrincipal = principal.getName();
         }
 
-        // Retrieve the user's ID from the username (replace with your method)
-        String userId = this.userEntityService.getUserIdByUsername(username);
-
         // Check if the requested user ID matches the logged-in user's ID
-        if (!id.equals(userId)) {
+        if (!usernamePrincipal.equals(username)) {
             // If not, return a 403 Forbidden page
             throw new UserNotAllowedException();
         }
 
-        model.addAttribute("userId", id);
+        model.addAttribute("username", username);
         model.addAttribute("profilePageStyle", true);
 
         return "profile";

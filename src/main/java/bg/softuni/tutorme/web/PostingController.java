@@ -29,16 +29,11 @@ public class PostingController {
         return new AddPostingDTO();
     }
 
-    @GetMapping("/post/add-post")
-    public String addPost(){
-        return "add-post";
-    }
-
     @PostMapping("/post/add-post")
     public String doAddPost(@Valid AddPostingDTO addPostingDTO, Principal principal) {
         this.postingService.createPost(addPostingDTO, principal);
 
-        return "redirect:/";
+        return "redirect:/posts/all";
     }
 
     @GetMapping("/posts/all")

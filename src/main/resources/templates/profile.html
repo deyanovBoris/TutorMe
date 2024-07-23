@@ -5,7 +5,7 @@
 <!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
 <!--    <title>Profile Page</title>-->
 <!--    <link href="/css/bootstrap.min.css" rel="stylesheet">-->
-    <head th:include="fragments/head:: headerFragment (pageTitle = 'Profile: ' + ${userId})">
+    <head th:include="fragments/head:: headerFragment (pageTitle = 'Profile: ' + ${username})">
     </head>
 </head>
 <body>
@@ -17,18 +17,18 @@
 <div class="profile-container">
     <div class="row m-4">
         <!-- Profile Section -->
-        <div class="col-md-4">
-            <div class="card p-5 mb-3 ">
+        <div class="col-lg-3" >
+            <div class="card p-5 mb-3 " style="height: 395px">
                 <div class="text-center">
                     <h4>Welcome!</h4>
-                    <p th:text="${userId}">Username</p>
+                    <p th:text="${username}">Username</p>
                     <img src="https://via.placeholder.com/100" alt="Profile Photo" class="profile-photo">
                 </div>
             </div>
         </div>
 
         <!-- Courses and Appointments Section -->
-        <div class="col-md-8">
+        <div class="col-lg-8">
             <!-- My Courses Section -->
             <div class="card p-3 mb-4" style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-radius: 10px;">
                 <h5>My Courses</h5>
