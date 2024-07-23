@@ -7,7 +7,6 @@ import bg.softuni.tutorme.entities.enums.UserRoleEnum;
 import bg.softuni.tutorme.repositories.RoleRepository;
 import bg.softuni.tutorme.repositories.UserRepository;
 import bg.softuni.tutorme.service.exceptions.UserNotFoundException;
-import org.h2.engine.User;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

@@ -41,7 +41,7 @@ public class UserEntity {
     @Basic
     private String profilePhotoUrl;
 
-    @Column(columnDefinition = "TEXT")
+    @Column()
     private String biography;
 
     public UserEntity() {

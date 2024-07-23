@@ -5,7 +5,7 @@
 <div th:fragment="navbar(activeLink)"
      class="container">
     <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
-        <div class="col-md-3 mb-2 mb-md-0">
+        <div class="col-lg-3 mb-2 mb-md-0">
             <a href="/" class="d-inline-flex link-body-emphasis text-decoration-none">
                 <svg class="bi" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"/></svg>
             </a>
@@ -54,7 +54,19 @@
             </li>
         </ul>
 
-        <div class="col-md-3 text-end">
+        <div class="col-lg-3 text-end">
+
+            <form th:method="GET" class="mb-2">
+                <label for="lang" th:text="#{nav_bar_language}">Language:</label>
+                <select
+                        id="lang"
+                        name="lang"
+                        onchange="this.form.submit()">
+                    <option value = "en_US" th:selected="${#locale.toString() == 'en_US'}">English</option>
+                    <option value = "bg_BG" th:selected="${#locale.toString() == 'bg_BG'}">Български</option>
+                </select>
+            </form>
+
             <th:block sec:authorize="!isAuthenticated()">
                 <a th:href="@{/login}"
                    role="button"
@@ -73,16 +85,7 @@
                 <button type="submit" class="btn btn-primary" th:text="#{nav_bar_logout}"></button>
             </form>
 
-            <form th:method="GET" class="mt-2">
-                <label for="lang" th:text="#{nav_bar_language}">Language:</label>
-                <select
-                        id="lang"
-                        name="lang"
-                        onchange="this.form.submit()">
-                    <option value = "en_US" th:selected="${#locale.toString() == 'en_US'}">English</option>
-                    <option value = "bg_BG" th:selected="${#locale.toString() == 'bg_BG'}">Български</option>
-                </select>
-            </form>
+
 
         </div>
     </header>

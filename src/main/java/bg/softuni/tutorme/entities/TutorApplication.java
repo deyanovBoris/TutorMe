@@ -18,7 +18,7 @@ public class TutorApplication {
     @Column(nullable = false)
     private String phone;
 
-    @Column(columnDefinition = "TEXT", nullable = false)
+    @Column(nullable = false)
     private String motivation;
 
     @ManyToMany
