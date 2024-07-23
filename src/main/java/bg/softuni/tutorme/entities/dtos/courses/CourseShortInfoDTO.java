@@ -1,5 +1,7 @@
 package bg.softuni.tutorme.entities.dtos.courses;
 
+import java.time.LocalDate;
+
 public class CourseShortInfoDTO {
     private long id;
 
@@ -12,6 +14,9 @@ public class CourseShortInfoDTO {
     private String instructorName;
 
     private long durationInWeeks;
+
+    private LocalDate startDate;
+    private LocalDate endDate;
 
     public CourseShortInfoDTO() {
     }
@@ -67,6 +72,24 @@ public class CourseShortInfoDTO {
 
     public CourseShortInfoDTO setDurationInWeeks(long durationInWeeks) {
         this.durationInWeeks = durationInWeeks;
+        return this;
+    }
+
+    public LocalDate getStartDate() {
+        return startDate;
+    }
+
+    public CourseShortInfoDTO setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
+        return this;
+    }
+
+    public LocalDate getEndDate() {
+        return endDate;
+    }
+
+    public CourseShortInfoDTO setEndDate(LocalDate endDate) {
+        this.endDate = endDate;
         return this;
     }
 }

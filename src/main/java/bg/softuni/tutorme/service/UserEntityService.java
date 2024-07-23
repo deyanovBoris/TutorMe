@@ -1,6 +1,7 @@
 package bg.softuni.tutorme.service;
 
 import bg.softuni.tutorme.entities.dtos.TutorFeatureDTO;
+import bg.softuni.tutorme.entities.dtos.UserProfileDTO;
 import bg.softuni.tutorme.entities.dtos.UserRegisterDTO;
 import bg.softuni.tutorme.entities.user.TutorMeUserDetails;
 import bg.softuni.tutorme.service.exceptions.UserNotFoundException;
@@ -18,4 +19,6 @@ public interface UserEntityService {
     Optional<TutorMeUserDetails> getCurrentUser();
 
     List<TutorFeatureDTO> getFeaturedTutors();
+
+    UserProfileDTO getUserByUsername(String username) throws UserNotFoundException;
 }

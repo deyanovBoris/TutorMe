@@ -1,15 +1,19 @@
 package bg.softuni.tutorme.service.impl;
 
+import bg.softuni.tutorme.entities.Course;
 import bg.softuni.tutorme.entities.UserEntity;
 import bg.softuni.tutorme.entities.dtos.TutorFeatureDTO;
+import bg.softuni.tutorme.entities.dtos.UserProfileDTO;
+import bg.softuni.tutorme.entities.dtos.courses.CourseInfoDTO;
+import bg.softuni.tutorme.entities.dtos.courses.CourseShortInfoDTO;
 import bg.softuni.tutorme.entities.enums.UserRoleEnum;
 import bg.softuni.tutorme.entities.dtos.UserRegisterDTO;
 import bg.softuni.tutorme.entities.user.TutorMeUserDetails;
-import bg.softuni.tutorme.repositories.CourseRepository;
 import bg.softuni.tutorme.repositories.RoleRepository;
 import bg.softuni.tutorme.repositories.UserRepository;
 import bg.softuni.tutorme.service.UserEntityService;
 import bg.softuni.tutorme.service.exceptions.UserNotFoundException;
+import org.modelmapper.ModelMapper;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -27,10 +31,13 @@ public class UserEntityServiceImpl implements UserEntityService {
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public UserEntityServiceImpl(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
+    private final ModelMapper modelMapper;
+
+    public UserEntityServiceImpl(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder, ModelMapper modelMapper) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
+        this.modelMapper = modelMapper;
     }
 
     @Override
@@ -91,6 +98,24 @@ public class UserEntityServiceImpl implements UserEntityService {
                         .setUsername(u.getUsername())
                         .setBiography(u.getBiography())
                         .setProfilePhotoUrl(u.getProfilePhotoUrl()))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional
+    public UserProfileDTO getUserByUsername(String username) throws UserNotFoundException {
+        UserEntity user = this.userRepository.findByUsername(username)
+                .orElseThrow(UserNotFoundException::new);
+
+        return this.modelMapper.map(user, UserProfileDTO.class)
+                .setCoursesAttending(mapCourses(user.getCoursesAttending()))
+                .setCoursesTutoring(mapCourses(user.getCoursesTutoring()));
+    }
+
+    private List<CourseShortInfoDTO> mapCourses(List<Course> courses){
+        return courses
+                .stream()
+                .map(c -> this.modelMapper.map(c, CourseShortInfoDTO.class))
                 .collect(Collectors.toList());
     }
 

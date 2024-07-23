@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec='http://www.thymeleaf.org/extras/spring-security'>
 <head>
 <!--    <meta charset="UTF-8">-->
 <!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
@@ -10,6 +12,8 @@
 </head>
 <body>
 
+<div th:replace="~{/fragments/color-toggle}">Color toggle</div>
+
 <div th:replace="~{fragments/header::navbar(activeLink=${'profile'})}">Header</div>
 
 <div class="b-example-divider"></div>
@@ -17,63 +21,34 @@
 <div class="profile-container">
     <div class="row m-4">
         <!-- Profile Section -->
-        <div class="col-lg-3" >
-            <div class="card p-5 mb-3 " style="height: 395px">
+        <div class="col-lg-4" >
+            <div class="card p-5 mb-3 " style="height: 399px">
                 <div class="text-center">
                     <h4>Welcome!</h4>
-                    <p th:text="${username}">Username</p>
-                    <img src="https://via.placeholder.com/100" alt="Profile Photo" class="profile-photo">
-                </div>
-            </div>
-        </div>
-
-        <!-- Courses and Appointments Section -->
-        <div class="col-lg-8">
-            <!-- My Courses Section -->
-            <div class="card p-3 mb-4" style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-radius: 10px;">
-                <h5>My Courses</h5>
-                <div class="scroll-horizontal">
-                    <div class="card m-2">
-                        <img src="https://via.placeholder.com/250x150" alt="Course Photo" class="profile-course-photo">
-                        <div class="card-body">
-                            <h6 class="card-title">Course Title 1</h6>
-                            <p class="card-text">Term: Spring 2024</p>
-                            <p class="card-text">Start Date: January 10, 2024</p>
-                            <p class="card-text">End Date: May 20, 2024</p>
-                        </div>
-                    </div>
-                    <div class="card m-2">
-                        <img src="https://via.placeholder.com/250x150" alt="Course Photo" class="profile-course-photo">
-                        <div class="card-body">
-                            <h6 class="card-title">Course Title 2</h6>
-                            <p class="card-text">Term: Summer 2024</p>
-                            <p class="card-text">Start Date: June 15, 2024</p>
-                            <p class="card-text">End Date: August 25, 2024</p>
-                        </div>
-                    </div>
-                    <div class="card m-2">
-                        <img src="https://via.placeholder.com/250x150" alt="Course Photo" class="profile-course-photo">
-                        <div class="card-body">
-                            <h6 class="card-title">Course Title 3</h6>
-                            <p class="card-text">Term: Fall 2024</p>
-                            <p class="card-text">Start Date: September 1, 2024</p>
-                            <p class="card-text">End Date: December 15, 2024</p>
-                        </div>
-                    </div>
-                    <!-- Add more course cards as needed -->
+                    <p th:text="${userData.username}">Username</p>
+                    <img th:src="${userData.profilePhotoUrl}" alt="Profile Photo" class="profile-photo">
+                    <h5 class="mt-3">Bio:</h5>
+                    <p th:text="${userData.biography}">Bio</p>
                 </div>
             </div>
 
-            <!-- Appointments Section -->
-            <div class="card p-4">
+            <div class="card p-4 mt-4 mb-4" style="height: 397px">
                 <h5>Appointments</h5>
                 <div class="scroll-vertical">
+                    <a th:href="@{/}" style="text-decoration: none">
+                        <div class="card p-2 mb-2">
+                            <div class="appointment-info">
+                                <span>Course 1</span>
+                                <span>July 30, 2024 - 10:00 AM</span>
+                                <span>Room 101</span>
+                            </div>
+                        </div>
+                    </a>
                     <div class="card p-2 mb-2">
                         <div class="appointment-info">
                             <span>Course 1</span>
                             <span>July 30, 2024 - 10:00 AM</span>
                             <span>Room 101</span>
-                            <a href="#" class="btn btn-primary btn-sm">Go to Appointment</a>
                         </div>
                     </div>
                     <div class="card p-2 mb-2">
@@ -81,7 +56,6 @@
                             <span>Course 2</span>
                             <span>August 5, 2024 - 2:00 PM</span>
                             <span>Room 202</span>
-                            <a href="#" class="btn btn-primary btn-sm">Go to Appointment</a>
                         </div>
                     </div>
                     <div class="card p-2 mb-2">
@@ -89,7 +63,6 @@
                             <span>Course 3</span>
                             <span>August 12, 2024 - 11:00 AM</span>
                             <span>Online</span>
-                            <a href="#" class="btn btn-primary btn-sm">Go to Appointment</a>
                         </div>
                     </div>
                     <div class="card p-2 mb-2">
@@ -97,12 +70,97 @@
                             <span>Course 3</span>
                             <span>August 12, 2024 - 11:00 AM</span>
                             <span>Online</span>
-                            <a href="#" class="btn btn-primary btn-sm">Go to Appointment</a>
                         </div>
                     </div>
                     <!-- Add more appointment cards as needed -->
                 </div>
             </div>
+        </div>
+
+
+
+        <!-- Courses and Appointments Section -->
+        <div class="col-lg-8">
+            <!-- My Courses Section -->
+            <div class="card p-3 mb-4" style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-radius: 10px;">
+                <h5>Attending Courses</h5>
+                <div class="scroll-horizontal">
+                    <div th:if="${userData.getCoursesAttending().size() == 0}">
+                        <p class="ms-2">Not attending any courses</p>
+                    </div>
+                    <div th:each="course : ${userData.coursesAttending}" class="card m-2">
+                        <a th:href="@{/course/{id}(id=${course.id})}" class="card" style="text-decoration: none;">
+                            <img th:src="${course.courseImageUrl}" alt="Course Photo" class="profile-course-photo">
+                            <div class="card-body">
+                                <h6 th:text="${course.title}" class="card-title">Course Title 1</h6>
+                                <p class="card-text">Term: Spring 2024</p>
+                                <p class="card-text">Start Date: <span th:text="${course.startDate}"> January 10, 2024</span></p>
+                                <p class="card-text">End Date: <span th:text="${course.startDate}"> May 10, 2024</span></p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div sec:authorize="hasRole('TUTOR')" class="card p-3 mb-4" style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-radius: 10px;">
+                <h5>My Courses</h5>
+                <div class="scroll-horizontal">
+                    <div th:if="${userData.getCoursesTutoring().size() == 0}">
+                        <p class="ms-2">Not attending any courses</p>
+                    </div>
+                    <div th:each="course : ${userData.coursesTutoring}" class="m-2">
+                        <a th:href="@{/course/{id}(id=${course.id})}" class="card" style="text-decoration: none;">
+                            <img th:src="${course.courseImageUrl}" alt="Course Photo" class="profile-course-photo">
+                            <div class="card-body">
+                                <h6 th:text="${course.title}" class="card-title">Course Title 1</h6>
+                                <p class="card-text">Term: Spring 2024</p>
+                                <p class="card-text">Start Date: <span th:text="${course.startDate}"> January 10, 2024</span></p>
+                                <p class="card-text">End Date: <span th:text="${course.startDate}"> May 10, 2024</span></p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Appointments Section -->
+<!--            <div class="card p-4">-->
+<!--                <h5>Appointments</h5>-->
+<!--                <div class="scroll-vertical">-->
+<!--                    <div class="card p-2 mb-2">-->
+<!--                        <div class="appointment-info">-->
+<!--                            <span>Course 1</span>-->
+<!--                            <span>July 30, 2024 - 10:00 AM</span>-->
+<!--                            <span>Room 101</span>-->
+<!--                            <a href="#" class="btn btn-primary btn-sm">Go to Appointment</a>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="card p-2 mb-2">-->
+<!--                        <div class="appointment-info">-->
+<!--                            <span>Course 2</span>-->
+<!--                            <span>August 5, 2024 - 2:00 PM</span>-->
+<!--                            <span>Room 202</span>-->
+<!--                            <a href="#" class="btn btn-primary btn-sm">Go to Appointment</a>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="card p-2 mb-2">-->
+<!--                        <div class="appointment-info">-->
+<!--                            <span>Course 3</span>-->
+<!--                            <span>August 12, 2024 - 11:00 AM</span>-->
+<!--                            <span>Online</span>-->
+<!--                            <a href="#" class="btn btn-primary btn-sm">Go to Appointment</a>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="card p-2 mb-2">-->
+<!--                        <div class="appointment-info">-->
+<!--                            <span>Course 3</span>-->
+<!--                            <span>August 12, 2024 - 11:00 AM</span>-->
+<!--                            <span>Online</span>-->
+<!--                            <a href="#" class="btn btn-primary btn-sm">Go to Appointment</a>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    &lt;!&ndash; Add more appointment cards as needed &ndash;&gt;-->
+<!--                </div>-->
+<!--            </div>-->
         </div>
     </div>
 </div>
@@ -111,81 +169,8 @@
 
 <div th:replace="~{fragments/footer}">Footer</div>
 
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="/js/jquery-3.7.1.min.js"></script>
+<script src="/js/popper.min.js"></script>
+<script src="/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
-
-
-<!--<!DOCTYPE html>-->
-<!--<html lang="en"-->
-<!--      xmlns:th="http://www.thymeleaf.org">-->
-<!--<head>-->
-<!--    <head th:include="fragments/head:: headerFragment (pageTitle = 'Profile')">-->
-<!--    </head>-->
-<!--&lt;!&ndash;    <meta charset="UTF-8">&ndash;&gt;-->
-<!--&lt;!&ndash;    <meta name="viewport" content="width=device-width, initial-scale=1.0">&ndash;&gt;-->
-<!--&lt;!&ndash;    <title>User Dashboard</title>&ndash;&gt;-->
-<!--&lt;!&ndash;    <link rel="stylesheet" href="/css/userPage.css">&ndash;&gt;-->
-<!--&lt;!&ndash;    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">&ndash;&gt;-->
-
-<!--&lt;!&ndash;    <script src="/js/bootstrap.bundle.min.js"></script>&ndash;&gt;-->
-
-<!--</head>-->
-<!--<body>-->
-
-<!--<div th:replace="~{fragments/header::navbar(activeLink=${'courses'})}">Header</div>-->
-
-<!--<div class="b-example-divider"></div>-->
-
-<!--<main>-->
-<!--    <section class="main-content">-->
-<!--        <div class="profile-section">-->
-<!--            <section id="profile">-->
-<!--                <h2>Profile</h2>-->
-<!--                <p>Welcome, <span th:text="${userId}"></span></p>-->
-<!--            </section>-->
-<!--        </div>-->
-<!--        <div class="right-section">-->
-<!--            <section id="courses">-->
-<!--                <h2>My Courses</h2>-->
-<!--                <div class="cards-container" >-->
-<!--                    <div th:each="course : ${courses}" class="card">-->
-<!--                        <h3 th:text="${course.title}"></h3>-->
-<!--                        <p th:text="${course.description}"></p>-->
-<!--                        <p><strong>Term:</strong> <span th:text="${course.term}"></span></p>-->
-<!--                        <p><strong>Start Date:</strong> <span th:text="${course.startDate}"></span></p>-->
-<!--                        <p><strong>End Date:</strong> <span th:text="${course.endDate}"></span></p>-->
-<!--                        <button>Edit Course</button>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </section>-->
-<!--            <section id="students">-->
-<!--                <h2>My Students</h2>-->
-<!--                <div id="students-container" class="cards-container">-->
-<!--                    <div class="card" th:each="student : ${students}">-->
-<!--                        <img th:src="@{/images/student_placeholder.png}" alt="Student Photo">-->
-<!--                        <h3 th:text="${student.name}"></h3>-->
-<!--                        <ul>-->
-<!--                            <li th:each="course : ${student.courses}" th:text="${course.title}"></li>-->
-<!--                        </ul>-->
-<!--                        <a href="#" th:href="@{/profile/{id}(id=${student.id})}">View Profile</a>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--                <div id="student-buttons">-->
-<!--                    <button id="show-more-students">Show More</button>-->
-<!--                    <button id="show-less-students">Show Less</button>-->
-<!--                </div>-->
-<!--            </section>-->
-<!--        </div>-->
-<!--    </section>-->
-<!--    <div class="b-example-divider"></div>-->
-
-<!--</main>-->
-
-<!--<div th:replace="~{fragments/footer}">Footer</div>-->
-<!--</body>-->
-
-<!--<script defer src="/js/userPage.js"></script>-->
-<!--</html>-->

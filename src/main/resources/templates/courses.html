@@ -31,7 +31,7 @@
   <div class="row">
     <div th:each="course : ${courses}" class="col-lg-3 col-md-5 mb-4 d-flex justify-content-center">
 
-      <a th:href="@{/course/{id}(id=${course.id})}" class="card course-card" style="text-decoration: none">
+      <a th:href="@{/course/{id}(id=${course.id})}" class="card course-card" style="text-decoration: none;">
         <img th:src="@{${course.courseImageUrl}}" class="card-img-top course-image" alt="Course Image">
         <div class="card-body course-body">
           <h5 class="card-title" th:text="${course.title}">Course Title</h5>

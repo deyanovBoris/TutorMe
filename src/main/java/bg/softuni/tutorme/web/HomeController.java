@@ -34,7 +34,6 @@ public class HomeController {
 //    @PreAuthorize("hasRole('ADMIN')")
     public String dashboard(@PathVariable("username") String username, Model model, Principal principal) throws UserNotFoundException {
 
-//        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String usernamePrincipal;
         if (principal instanceof UserDetails) {
             usernamePrincipal = ((UserDetails) principal).getUsername();
@@ -42,13 +41,11 @@ public class HomeController {
             usernamePrincipal = principal.getName();
         }
 
-        // Check if the requested user ID matches the logged-in user's ID
         if (!usernamePrincipal.equals(username)) {
-            // If not, return a 403 Forbidden page
             throw new UserNotAllowedException();
         }
 
-        model.addAttribute("username", username);
+        model.addAttribute("userData", this.userEntityService.getUserByUsername(username));
         model.addAttribute("profilePageStyle", true);
 
         return "profile";
