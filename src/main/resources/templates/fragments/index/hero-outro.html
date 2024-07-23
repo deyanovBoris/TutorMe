@@ -9,15 +9,15 @@
                  loading="lazy">
         </div>
         <div class="col-lg-6">
-            <h1 class="display-5 fw-bold text-body-emphasis lh-1 mb-3">Like what you see?</h1>
-            <p class="lead">Sign up to get access to our freelance tutors.
+            <h1 th:text="#{index_outro_hero_title}" class="display-5 fw-bold text-body-emphasis lh-1 mb-3">Like what you see?</h1>
+            <p th:text="#{index_outro_hero_subtext}" class="lead">Sign up to get access to our freelance tutors.
                 If you can't find what you're looking for, signing up lets you make posts, which our tutors
                 can respond to! Already have an account and you made it here somehow? Congrats, log in below!
             </p>
             <div class="d-grid gap-2 d-md-flex justify-content-md-start">
-                <a th:href="@{/register}" role="button" class="btn btn-primary btn-lg px-4 me-md-2">Sign Up</a>
+                <a th:href="@{/register}" th:text="#{index_outro_hero_sign_up}" role="button" class="btn btn-primary btn-lg px-4 me-md-2">Sign Up</a>
 <!--                <button type="button" class="btn btn-primary btn-lg px-4 me-md-2">Sign Up</button>-->
-                <a th:href="@{/login}" role="button" class="btn btn-outline-secondary btn-lg px-4">Log In</a>
+                <a th:href="@{/login}"  th:text="#{index_outro_hero_login}" role="button" class="btn btn-outline-secondary btn-lg px-4">Log In</a>
 <!--                <button type="button" class="btn btn-outline-secondary btn-lg px-4">Log In</button>-->
             </div>
         </div>

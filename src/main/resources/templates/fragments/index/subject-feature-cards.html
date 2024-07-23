@@ -54,7 +54,7 @@
 </svg>
 
 <div class="container px-4 py-5" id="custom-cards">
-    <h2 class="pb-2 border-bottom">Featured Subjects</h2>
+    <h2 class="pb-2 border-bottom" th:text="#{index_featured_subjects_title}">Featured Subjects</h2>
 
     <div class="row row-cols-1 row-cols-lg-3 align-items-stretch g-4 py-5">
 
@@ -64,17 +64,8 @@
                     <h3 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold" th:text="${subject.name}">Short title, long jacket</h3>
                     <ul class="d-flex list-unstyled mt-auto">
                         <li class="me-auto">
-                            <a th:href="@{/courses/subject/{id}(id=${subject.id})}" role="button" class="btn btn-light">Courses</a>
-<!--                            <img src="https://github.com/twbs.png" alt="Bootstrap" width="32" height="32" class="rounded-circle border border-white">-->
+                            <a th:href="@{/courses/subject/{id}(id=${subject.id})}" role="button" class="btn btn-light" th:text="#{index_featured_subjects_course_button}">Courses</a>
                         </li>
-<!--                        <li class="d-flex align-items-center me-3">-->
-<!--                            <svg class="bi me-2" width="1em" height="1em"><use xlink:href="#geo-fill"/></svg>-->
-<!--                            <small>Earth</small>-->
-<!--                        </li>-->
-<!--                        <li class="d-flex align-items-center">-->
-<!--                            <svg class="bi me-2" width="1em" height="1em"><use xlink:href="#calendar3"/></svg>-->
-<!--                            <small>3d</small>-->
-<!--                        </li>-->
                     </ul>
                 </div>
             </div>

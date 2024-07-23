@@ -26,11 +26,12 @@
             <li>
                 <a th:href="@{/posts/all}"
                    class="nav-link px-2"
+                   th:text="#{nav_bar_posts}"
                    th:classappend="${activeLink == 'posts'} ? 'text-secondary'">Posts</a>
             </li>
-            <li>
-                <a href="#" class="nav-link px-2">FAQs</a>
-            </li>
+<!--            <li>-->
+<!--                <a href="#" class="nav-link px-2">FAQs</a>-->
+<!--            </li>-->
             <li sec:authorize="!hasRole('TUTOR')">
                 <a th:href="@{/start-tutoring}"
                    class="nav-link px-2"

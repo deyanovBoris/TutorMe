@@ -64,7 +64,7 @@ public class UserEntityServiceImpl implements UserEntityService {
     public boolean isEnrolledInCourse(String username, long courseId) throws UserNotFoundException {
         return this.userRepository.findByUsername(username)
                 .orElseThrow(UserNotFoundException::new)
-                .getCoursesAttending()
+                 .getCoursesAttending()
                 .stream()
                 .anyMatch(course -> course.getId() == courseId);
     }

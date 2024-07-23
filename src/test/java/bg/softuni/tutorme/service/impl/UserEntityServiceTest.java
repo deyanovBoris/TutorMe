@@ -90,7 +90,7 @@ public class UserEntityServiceTest {
     }
 
     @Test
-    void testGetUserIdStringByUsernameNonExistingShouldThrow() throws UserNotFoundException {
+    void testGetUserIdStringByUsernameNonExistingShouldThrow() {
         Assertions.assertThrows(UserNotFoundException.class,
                 () -> this.toTest.getUserIdByUsername("nonExistingUser"));
     }

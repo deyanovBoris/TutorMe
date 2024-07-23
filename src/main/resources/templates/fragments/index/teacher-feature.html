@@ -1,6 +1,6 @@
 <div class="container marketing">
     <div class="row text-center">
-        <h1 class="fw-normal mt-5 mb-3 display-5 fw-bold lh-2 text-body-emphasis">Presenting our star tutors</h1>
+        <h1 class="fw-normal mt-5 mb-3 display-5 fw-bold lh-2 text-body-emphasis" th:text="#{index_teacher_feature_title}">Presenting our star tutors</h1>
     </div>
     <div class="row mt-4">
         <div th:each="tutor : ${featuredTutors}" class="col-lg-4 text-center">
