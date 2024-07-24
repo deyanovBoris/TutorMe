@@ -34,6 +34,8 @@ public class RegisterController {
     public String register(@Valid UserRegisterDTO data,
                            BindingResult bindingResult,
                            RedirectAttributes rAtt){
+
+
         if (bindingResult.hasErrors()){
             rAtt.addFlashAttribute("userRegisterObject", data);
             rAtt.addFlashAttribute(

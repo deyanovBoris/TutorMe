@@ -43,11 +43,14 @@
         <th:block th:if="${isAlreadyEnrolled}">
           <div class="container mt-2">
             <h5 class="text-center">Make an appointment</h5>
-            <form>
+            <p th:if="${errorDt}" class="text-danger">Select an available slot in the future.</p>
+            <form th:action="@{/course/make-appointment/{courseId}(courseId=${course.getId()})}"
+                  th:method="POST"
+                  th:object="${dateTimeObject}">
               <div class="form-group">
                 <label for="datetimepicker" class="d-block text-center mb-2">Choose a date and time:</label>
                 <div class="input-group date mx-auto" id="datetimepicker" data-target-input="nearest" style="width: 250px;">
-                  <input type="text" class="form-control datetimepicker-input text-center" placeholder="Press calendar" data-target="#datetimepicker"/>
+                  <input th:field="*{dateTime}" type="text" class="form-control datetimepicker-input text-center" placeholder="Press calendar" data-target="#datetimepicker"/>
                   <div class="input-group-append" data-target="#datetimepicker" data-toggle="datetimepicker">
                     <div class="input-group-text" style="height: 100%; display: flex; align-items: center;justify-content: center;">
                       <i class="fa fa-calendar"></i></div>
@@ -61,6 +64,7 @@
           </div>
         </th:block>
       </div>
+
     </div>
 
     <!-- Right Section -->
@@ -96,10 +100,11 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.39.0/js/tempusdominus-bootstrap-4.min.js"></script>
+
 <script>
   $(document).ready(function(){
     $('#datetimepicker').datetimepicker({
-      format: 'MM/DD/YYYY HH:mm',
+      format: 'DD-MM-YYYY HH:mm',
       stepping: 30,
       icons: {
         time: 'fas fa-clock',
@@ -124,27 +129,6 @@
     });
   });
 </script>
-<!--<script>-->
-<!--  $(document).ready(function(){-->
-<!--    $('#datepicker').datepicker({-->
-<!--      format: 'dd/mm/yyyy',-->
-<!--      todayHighlight: true,-->
-<!--      autoclose: true-->
-<!--    });-->
-<!--  });-->
-<!--</script>-->
 </body>
-
-<!--<script src="/js/bootstrap.bundle.min.js"></script>-->
-<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>-->
-<!--<script>-->
-<!--  $(document).ready(function(){-->
-<!--    $('#datepicker').datepicker({-->
-<!--      format: 'mm/dd/yyyy',-->
-<!--      todayHighlight: true,-->
-<!--      autoclose: true-->
-<!--    });-->
-<!--  });-->
-<!--</script>-->
 
 </html>

@@ -1,11 +1,14 @@
 package bg.softuni.tutorme.web;
 
+import bg.softuni.tutorme.entities.dtos.DateTimeDTO;
 import bg.softuni.tutorme.entities.dtos.courses.CourseAddDTO;
 import bg.softuni.tutorme.entities.dtos.courses.CourseShortInfoDTO;
 import bg.softuni.tutorme.entities.enums.CourseType;
+import bg.softuni.tutorme.service.AppointmentService;
 import bg.softuni.tutorme.service.CourseService;
 import bg.softuni.tutorme.service.SubjectService;
 import bg.softuni.tutorme.service.UserEntityService;
+import bg.softuni.tutorme.service.exceptions.CourseNotFoundException;
 import bg.softuni.tutorme.service.exceptions.UserNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
@@ -27,16 +30,23 @@ public class CourseController {
     private final SubjectService subjectService;
     private final CourseService courseService;
     private final UserEntityService userEntityService;
+    private final AppointmentService appointmentService;
 
-    public CourseController(SubjectService subjectService, CourseService courseService, UserEntityService userEntityService) {
+    public CourseController(SubjectService subjectService, CourseService courseService, UserEntityService userEntityService, AppointmentService appointmentService) {
         this.subjectService = subjectService;
         this.courseService = courseService;
         this.userEntityService = userEntityService;
+        this.appointmentService = appointmentService;
     }
 
     @ModelAttribute("applicationData")
     public CourseAddDTO courseAddDTO(){
         return new CourseAddDTO();
+    }
+
+    @ModelAttribute("dateTimeObject")
+    public DateTimeDTO dateTimeDTO(){
+        return new DateTimeDTO();
     }
 
     @GetMapping("/courses/all/{pageNo}")
@@ -116,5 +126,25 @@ public class CourseController {
         this.courseService.enrollInCourse(principal.getName(), id);
 
         return "redirect:/course/{id}";
+    }
+
+    @PostMapping("/course/make-appointment/{courseId}")
+    public String makeAppointment(@PathVariable("courseId") long courseId,
+                                  Model model,
+                                  DateTimeDTO dateTimeDTO,
+                                  RedirectAttributes rAtt,
+                                  Principal principal)
+            throws UserNotFoundException, CourseNotFoundException {
+
+        boolean success = this.appointmentService.makeAppointment(courseId, dateTimeDTO, principal);
+
+        if (!success){
+            rAtt.addFlashAttribute("dateTimeObject", dateTimeDTO);
+            rAtt.addFlashAttribute("errorDt", true);
+
+            return "redirect:/course/{courseId}";
+        }
+
+        return "redirect:/course/{courseId}";
     }
 }

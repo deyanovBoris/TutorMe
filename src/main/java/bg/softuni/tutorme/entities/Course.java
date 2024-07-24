@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import org.hibernate.validator.constraints.URL;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -32,6 +33,8 @@ public class Course {
     private UserEntity courseOwner;
     @ManyToMany(mappedBy = "coursesAttending")
     private List<UserEntity> students;
+    @OneToMany(mappedBy = "course")
+    private List<Appointment> appointments;
     @Column(nullable = false)
     private LocalDate startDate;
     @Column(nullable = false)
@@ -40,6 +43,9 @@ public class Course {
     private String courseImageUrl;
 
     public Course() {
+        students = new ArrayList<>();
+        appointments = new ArrayList<>();
+        subjects = new ArrayList<>();
     }
 
     public String getTitle() {
@@ -129,6 +135,15 @@ public class Course {
 
     public Course setSubjects(List<Subject> subjects) {
         this.subjects = subjects;
+        return this;
+    }
+
+    public List<Appointment> getAppointments() {
+        return appointments;
+    }
+
+    public Course setAppointments(List<Appointment> appointments) {
+        this.appointments = appointments;
         return this;
     }
 }

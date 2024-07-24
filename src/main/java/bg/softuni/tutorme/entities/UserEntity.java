@@ -44,10 +44,14 @@ public class UserEntity {
     @Column()
     private String biography;
 
+    @OneToMany(mappedBy = "madeByUser")
+    private List<Appointment> appointments;
+
     public UserEntity() {
         roles = new ArrayList<>();
         coursesTutoring = new ArrayList<>();
         coursesAttending = new ArrayList<>();
+        appointments = new ArrayList<>();
     }
 
     public long getId() {
@@ -146,6 +150,15 @@ public class UserEntity {
 
     public UserEntity setBiography(String biography) {
         this.biography = biography;
+        return this;
+    }
+
+    public List<Appointment> getAppointments() {
+        return appointments;
+    }
+
+    public UserEntity setAppointments(List<Appointment> appointments) {
+        this.appointments = appointments;
         return this;
     }
 }
