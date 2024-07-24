@@ -28,11 +28,17 @@
 <!--    Course/s page styles-->
     <link th:if="${coursesPageStyling}" href="/css/courses-page.css" rel="stylesheet">
     <link th:if="${coursePageStyling}" href="/css/course.css" rel="stylesheet">
-
-<!--    Posts styles-->
+    <link th:if="${coursePageStyling}" rel="stylesheet" href=
+            "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+    <link th:if="${coursePageStyling}" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.39.0/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet">
+    <link th:if="${coursePageStyling}" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <!--    Posts styles-->
     <link th:if="${postsPageStyling}" href="/css/posts.css" rel="stylesheet">
 
 <!--    Profile page styles-->
     <link th:if="${profilePageStyle}" href="/css/userPage.css" rel="stylesheet">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+
 
 </head>

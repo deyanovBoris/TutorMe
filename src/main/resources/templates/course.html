@@ -37,7 +37,29 @@
           <button th:if="${isAlreadyEnrolled}" type="submit" class="btn btn-primary enroll-button" disabled>Enroll</button>
           <button th:unless="${isAlreadyEnrolled}" type="submit" class="btn btn-primary enroll-button">Enroll</button>
         </form>
+      </div>
 
+      <div class="card card-shadow p-3 text-center">
+        <th:block th:if="${isAlreadyEnrolled}">
+          <div class="container mt-2">
+            <h5 class="text-center">Make an appointment</h5>
+            <form>
+              <div class="form-group">
+                <label for="datetimepicker" class="d-block text-center mb-2">Choose a date and time:</label>
+                <div class="input-group date mx-auto" id="datetimepicker" data-target-input="nearest" style="width: 250px;">
+                  <input type="text" class="form-control datetimepicker-input text-center" placeholder="Press calendar" data-target="#datetimepicker"/>
+                  <div class="input-group-append" data-target="#datetimepicker" data-toggle="datetimepicker">
+                    <div class="input-group-text" style="height: 100%; display: flex; align-items: center;justify-content: center;">
+                      <i class="fa fa-calendar"></i></div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group text-center mt-2">
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </div>
+            </form>
+          </div>
+        </th:block>
       </div>
     </div>
 
@@ -68,6 +90,61 @@
 
 <div th:replace="~{fragments/footer}">Footer</div>
 
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.39.0/js/tempusdominus-bootstrap-4.min.js"></script>
+<script>
+  $(document).ready(function(){
+    $('#datetimepicker').datetimepicker({
+      format: 'MM/DD/YYYY HH:mm',
+      stepping: 30,
+      icons: {
+        time: 'fas fa-clock',
+        date: 'far fa-calendar-alt',
+        up: 'fas fa-chevron-up',
+        down: 'fas fa-chevron-down',
+        previous: 'fas fa-chevron-left',
+        next: 'fas fa-chevron-right',
+        today: 'far fa-calendar-check',
+        clear: 'far fa-trash-alt',
+        close: 'far fa-times-circle'
+      },
+      buttons: {
+        showToday: true,
+        showClear: true,
+        showClose: true
+      }
+    });
+
+    $('#datetimepicker').on('focus', function () {
+      $(this).datetimepicker('show');
+    });
+  });
+</script>
+<!--<script>-->
+<!--  $(document).ready(function(){-->
+<!--    $('#datepicker').datepicker({-->
+<!--      format: 'dd/mm/yyyy',-->
+<!--      todayHighlight: true,-->
+<!--      autoclose: true-->
+<!--    });-->
+<!--  });-->
+<!--</script>-->
 </body>
+
+<!--<script src="/js/bootstrap.bundle.min.js"></script>-->
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>-->
+<!--<script>-->
+<!--  $(document).ready(function(){-->
+<!--    $('#datepicker').datepicker({-->
+<!--      format: 'mm/dd/yyyy',-->
+<!--      todayHighlight: true,-->
+<!--      autoclose: true-->
+<!--    });-->
+<!--  });-->
+<!--</script>-->
+
 </html>

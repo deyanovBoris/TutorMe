@@ -103,12 +103,12 @@
             </div>
 
             <div sec:authorize="hasRole('TUTOR')" class="card p-3 mb-4" style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-radius: 10px;">
-                <h5>My Courses</h5>
+                <h5>Attending Courses</h5>
                 <div class="scroll-horizontal">
                     <div th:if="${userData.getCoursesTutoring().size() == 0}">
                         <p class="ms-2">Not attending any courses</p>
                     </div>
-                    <div th:each="course : ${userData.coursesTutoring}" class="m-2">
+                    <div th:each="course : ${userData.coursesTutoring}" class="card m-2">
                         <a th:href="@{/course/{id}(id=${course.id})}" class="card" style="text-decoration: none;">
                             <img th:src="${course.courseImageUrl}" alt="Course Photo" class="profile-course-photo">
                             <div class="card-body">
@@ -121,46 +121,6 @@
                     </div>
                 </div>
             </div>
-
-            <!-- Appointments Section -->
-<!--            <div class="card p-4">-->
-<!--                <h5>Appointments</h5>-->
-<!--                <div class="scroll-vertical">-->
-<!--                    <div class="card p-2 mb-2">-->
-<!--                        <div class="appointment-info">-->
-<!--                            <span>Course 1</span>-->
-<!--                            <span>July 30, 2024 - 10:00 AM</span>-->
-<!--                            <span>Room 101</span>-->
-<!--                            <a href="#" class="btn btn-primary btn-sm">Go to Appointment</a>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                    <div class="card p-2 mb-2">-->
-<!--                        <div class="appointment-info">-->
-<!--                            <span>Course 2</span>-->
-<!--                            <span>August 5, 2024 - 2:00 PM</span>-->
-<!--                            <span>Room 202</span>-->
-<!--                            <a href="#" class="btn btn-primary btn-sm">Go to Appointment</a>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                    <div class="card p-2 mb-2">-->
-<!--                        <div class="appointment-info">-->
-<!--                            <span>Course 3</span>-->
-<!--                            <span>August 12, 2024 - 11:00 AM</span>-->
-<!--                            <span>Online</span>-->
-<!--                            <a href="#" class="btn btn-primary btn-sm">Go to Appointment</a>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                    <div class="card p-2 mb-2">-->
-<!--                        <div class="appointment-info">-->
-<!--                            <span>Course 3</span>-->
-<!--                            <span>August 12, 2024 - 11:00 AM</span>-->
-<!--                            <span>Online</span>-->
-<!--                            <a href="#" class="btn btn-primary btn-sm">Go to Appointment</a>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                    &lt;!&ndash; Add more appointment cards as needed &ndash;&gt;-->
-<!--                </div>-->
-<!--            </div>-->
         </div>
     </div>
 </div>
