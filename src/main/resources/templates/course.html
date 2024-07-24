@@ -44,6 +44,7 @@
           <div class="container mt-2">
             <h5 class="text-center">Make an appointment</h5>
             <p th:if="${errorDt}" class="text-danger">Select an available slot in the future.</p>
+
             <form th:action="@{/course/make-appointment/{courseId}(courseId=${course.getId()})}"
                   th:method="POST"
                   th:object="${dateTimeObject}">
@@ -61,6 +62,10 @@
                 <button type="submit" class="btn btn-primary">Submit</button>
               </div>
             </form>
+            <th:block th:if="${successApt}">
+              <p class="text-success mt-2">Appointment made successfully for:</p>
+              <p class="text-success" th:text="${dateTimeObjectSuccess.dateTime}"></p>
+            </th:block>
           </div>
         </th:block>
       </div>

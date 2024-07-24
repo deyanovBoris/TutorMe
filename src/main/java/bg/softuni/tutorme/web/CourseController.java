@@ -145,6 +145,9 @@ public class CourseController {
             return "redirect:/course/{courseId}";
         }
 
+        rAtt.addFlashAttribute("dateTimeObjectSuccess", dateTimeDTO);
+        rAtt.addFlashAttribute("successApt", true);
+
         return "redirect:/course/{courseId}";
     }
 }

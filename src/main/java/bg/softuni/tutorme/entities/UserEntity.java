@@ -44,7 +44,7 @@ public class UserEntity {
     @Column()
     private String biography;
 
-    @OneToMany(mappedBy = "madeByUser")
+    @OneToMany(mappedBy = "user")
     private List<Appointment> appointments;
 
     public UserEntity() {

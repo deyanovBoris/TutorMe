@@ -16,8 +16,7 @@ public class Appointment {
     @Basic
     private String description;
     @ManyToOne(optional = false)
-    private UserEntity madeByUser;
-
+    private UserEntity user;
     @ManyToOne(optional = false)
     private Course course;
 
@@ -52,11 +51,11 @@ public class Appointment {
     }
 
     public UserEntity getMadeByUser() {
-        return madeByUser;
+        return user;
     }
 
-    public Appointment setMadeByUser(UserEntity madeByUser) {
-        this.madeByUser = madeByUser;
+    public Appointment setMadeByUser(UserEntity user) {
+        this.user = user;
         return this;
     }
 
