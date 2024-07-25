@@ -1,8 +1,7 @@
-package bg.softuni.tutorme.entities.dtos;
+package bg.softuni.tutorme.entities.dtos.user;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 
 public class UserLoginDTO {
     @NotBlank

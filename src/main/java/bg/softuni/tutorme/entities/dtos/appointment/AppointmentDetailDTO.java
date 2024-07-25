@@ -1,6 +1,6 @@
-package bg.softuni.tutorme.entities.dtos;
+package bg.softuni.tutorme.entities.dtos.appointment;
 
-import bg.softuni.tutorme.entities.dtos.courses.CourseInfoDTO;
+import bg.softuni.tutorme.entities.dtos.user.UserShortDTO;
 
 import java.time.LocalDateTime;
 

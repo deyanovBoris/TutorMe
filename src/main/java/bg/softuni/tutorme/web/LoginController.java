@@ -1,6 +1,6 @@
 package bg.softuni.tutorme.web;
 
-import bg.softuni.tutorme.entities.dtos.UserLoginDTO;
+import bg.softuni.tutorme.entities.dtos.user.UserLoginDTO;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

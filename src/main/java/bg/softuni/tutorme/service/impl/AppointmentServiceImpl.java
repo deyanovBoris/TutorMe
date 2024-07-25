@@ -3,9 +3,9 @@ package bg.softuni.tutorme.service.impl;
 import bg.softuni.tutorme.entities.Appointment;
 import bg.softuni.tutorme.entities.Course;
 import bg.softuni.tutorme.entities.UserEntity;
-import bg.softuni.tutorme.entities.dtos.AppointmentDetailDTO;
+import bg.softuni.tutorme.entities.dtos.appointment.AppointmentDetailDTO;
 import bg.softuni.tutorme.entities.dtos.DateTimeDTO;
-import bg.softuni.tutorme.entities.dtos.UserShortDTO;
+import bg.softuni.tutorme.entities.dtos.user.UserShortDTO;
 import bg.softuni.tutorme.repositories.AppointmentRepository;
 import bg.softuni.tutorme.repositories.CourseRepository;
 import bg.softuni.tutorme.repositories.UserRepository;
@@ -19,7 +19,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.security.Principal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Optional;
 
 @Service
 public class AppointmentServiceImpl implements AppointmentService {

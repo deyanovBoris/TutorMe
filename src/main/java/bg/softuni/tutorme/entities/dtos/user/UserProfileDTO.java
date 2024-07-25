@@ -1,5 +1,6 @@
-package bg.softuni.tutorme.entities.dtos;
+package bg.softuni.tutorme.entities.dtos.user;
 
+import bg.softuni.tutorme.entities.dtos.appointment.AppointmentDTO;
 import bg.softuni.tutorme.entities.dtos.courses.CourseShortInfoDTO;
 
 import java.util.ArrayList;

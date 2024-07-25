@@ -1,8 +1,8 @@
 package bg.softuni.tutorme.service;
 
-import bg.softuni.tutorme.entities.dtos.TutorFeatureDTO;
-import bg.softuni.tutorme.entities.dtos.UserProfileDTO;
-import bg.softuni.tutorme.entities.dtos.UserRegisterDTO;
+import bg.softuni.tutorme.entities.dtos.tutor.TutorFeatureDTO;
+import bg.softuni.tutorme.entities.dtos.user.UserProfileDTO;
+import bg.softuni.tutorme.entities.dtos.user.UserRegisterDTO;
 import bg.softuni.tutorme.entities.user.TutorMeUserDetails;
 import bg.softuni.tutorme.service.exceptions.UserNotFoundException;
 

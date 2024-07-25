@@ -13,6 +13,10 @@ import java.util.Map;
 
 @Configuration
 public class RestConfig {
+    @Bean("genericRestClient")
+    public RestClient genericRestClient() {
+        return RestClient.create();
+    }
 
     @Bean("postingRestClient")
     public RestClient offersRestClient() {

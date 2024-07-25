@@ -1,6 +1,4 @@
-package bg.softuni.tutorme.entities.dtos;
-
-import java.util.List;
+package bg.softuni.tutorme.entities.dtos.tutor;
 
 public class TutorFeatureDTO {
     private String name;

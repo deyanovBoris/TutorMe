@@ -1,4 +1,4 @@
-package bg.softuni.tutorme.entities.dtos;
+package bg.softuni.tutorme.entities.dtos.user;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;

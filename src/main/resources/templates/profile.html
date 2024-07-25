@@ -18,13 +18,15 @@
     <div class="row m-4">
         <!-- Profile Section -->
         <div class="col-lg-4" >
-            <div class="card p-5 mb-3 " style="height: 399px">
+            <div class="card pt-3 ps-5 pe-5 mb-3 ">
                 <div class="text-center">
                     <h4>Welcome!</h4>
                     <p th:text="${userData.username}">Username</p>
                     <img th:src="${userData.profilePhotoUrl}" alt="Profile Photo" class="profile-photo">
                     <h5 class="mt-3">Bio:</h5>
                     <p th:text="${userData.biography}">Bio</p>
+                    <span>Random quote:</span>
+                    <p style="font-style: italic;" th:text="'&quot;' + ${randomQuote.quote} + '&quot; - ' + ${randomQuote.author}"></p>
                 </div>
             </div>
         <!-- Appointments  -->

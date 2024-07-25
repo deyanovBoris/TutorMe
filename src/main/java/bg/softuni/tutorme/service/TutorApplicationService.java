@@ -1,6 +1,6 @@
 package bg.softuni.tutorme.service;
 
-import bg.softuni.tutorme.entities.dtos.TutorApplicationDTO;
+import bg.softuni.tutorme.entities.dtos.tutor.TutorApplicationDTO;
 import bg.softuni.tutorme.service.exceptions.UserNotFoundException;
 
 import java.util.List;

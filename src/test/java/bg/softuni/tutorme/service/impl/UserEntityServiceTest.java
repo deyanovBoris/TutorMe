@@ -2,7 +2,7 @@ package bg.softuni.tutorme.service.impl;
 
 import bg.softuni.tutorme.entities.UserEntity;
 import bg.softuni.tutorme.entities.UserRoleEntity;
-import bg.softuni.tutorme.entities.dtos.UserRegisterDTO;
+import bg.softuni.tutorme.entities.dtos.user.UserRegisterDTO;
 import bg.softuni.tutorme.entities.enums.UserRoleEnum;
 import bg.softuni.tutorme.repositories.RoleRepository;
 import bg.softuni.tutorme.repositories.UserRepository;

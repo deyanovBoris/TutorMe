@@ -1,7 +1,6 @@
 package bg.softuni.tutorme.entities.dtos.courses;
 
-import bg.softuni.tutorme.entities.dtos.AppointmentCourseDTO;
-import bg.softuni.tutorme.entities.dtos.AppointmentDTO;
+import bg.softuni.tutorme.entities.dtos.appointment.AppointmentCourseDTO;
 import bg.softuni.tutorme.entities.dtos.InstructorDTO;
 import bg.softuni.tutorme.entities.dtos.StudentsShortInfoDto;
 

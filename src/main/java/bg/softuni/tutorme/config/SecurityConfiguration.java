@@ -33,7 +33,7 @@ public class SecurityConfiguration {
                     .requestMatchers("/courses/add").hasRole("TUTOR")
                     .requestMatchers("/login", "/register").hasRole("ANONYMOUS")
                     .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-                    .requestMatchers("/","/login/login-error", "access-denied", "start-tutoring", "courses/all/{pageNo}").permitAll()
+                    .requestMatchers("/","/api/quotes/random","/login/login-error", "access-denied", "start-tutoring", "courses/all/{pageNo}").permitAll()
                     .anyRequest().authenticated();
         })
             .formLogin(formLogin ->

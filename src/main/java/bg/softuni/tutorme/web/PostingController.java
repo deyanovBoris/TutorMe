@@ -1,9 +1,8 @@
 package bg.softuni.tutorme.web;
 
-import bg.softuni.tutorme.entities.dtos.AddPostingDTO;
+import bg.softuni.tutorme.entities.dtos.posts.AddPostingDTO;
 import bg.softuni.tutorme.service.PostingService;
 import bg.softuni.tutorme.service.UserEntityService;
-import bg.softuni.tutorme.service.exceptions.UserNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

@@ -1,4 +1,4 @@
-package bg.softuni.tutorme.entities.dtos;
+package bg.softuni.tutorme.entities.dtos.posts;
 
 public class AddPostingDTO {
 

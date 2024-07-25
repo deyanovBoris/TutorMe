@@ -2,7 +2,7 @@ package bg.softuni.tutorme.service.impl;
 
 import bg.softuni.tutorme.entities.Course;
 import bg.softuni.tutorme.entities.UserEntity;
-import bg.softuni.tutorme.entities.dtos.AppointmentCourseDTO;
+import bg.softuni.tutorme.entities.dtos.appointment.AppointmentCourseDTO;
 import bg.softuni.tutorme.entities.dtos.InstructorDTO;
 import bg.softuni.tutorme.entities.dtos.StudentsShortInfoDto;
 import bg.softuni.tutorme.entities.dtos.courses.CourseAddDTO;

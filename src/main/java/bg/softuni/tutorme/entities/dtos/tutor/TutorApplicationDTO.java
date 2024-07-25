@@ -1,4 +1,4 @@
-package bg.softuni.tutorme.entities.dtos;
+package bg.softuni.tutorme.entities.dtos.tutor;
 
 import bg.softuni.tutorme.entities.enums.ApplicationStatusEnum;
 import jakarta.validation.constraints.NotBlank;

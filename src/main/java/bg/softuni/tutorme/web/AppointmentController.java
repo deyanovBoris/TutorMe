@@ -1,6 +1,6 @@
 package bg.softuni.tutorme.web;
 
-import bg.softuni.tutorme.entities.dtos.AppointmentDetailDTO;
+import bg.softuni.tutorme.entities.dtos.appointment.AppointmentDetailDTO;
 import bg.softuni.tutorme.entities.dtos.DateTimeDTO;
 import bg.softuni.tutorme.service.AppointmentService;
 import bg.softuni.tutorme.service.exceptions.CourseNotFoundException;

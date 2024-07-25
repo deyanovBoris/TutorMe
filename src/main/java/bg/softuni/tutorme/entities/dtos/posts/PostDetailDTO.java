@@ -1,4 +1,6 @@
-package bg.softuni.tutorme.entities.dtos;
+package bg.softuni.tutorme.entities.dtos.posts;
+
+import bg.softuni.tutorme.entities.dtos.user.UserShortDTO;
 
 import java.time.LocalDateTime;
 

@@ -1,6 +1,6 @@
 package bg.softuni.tutorme.web;
 
-import bg.softuni.tutorme.entities.dtos.TutorApplicationDTO;
+import bg.softuni.tutorme.entities.dtos.tutor.TutorApplicationDTO;
 import bg.softuni.tutorme.entities.dtos.subjects.SubjectFeatureDTO;
 import bg.softuni.tutorme.service.SubjectService;
 import bg.softuni.tutorme.service.TutorApplicationService;

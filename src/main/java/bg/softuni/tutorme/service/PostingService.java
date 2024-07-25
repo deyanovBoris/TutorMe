@@ -1,8 +1,7 @@
 package bg.softuni.tutorme.service;
 
-import bg.softuni.tutorme.entities.dtos.AddPostingDTO;
-import bg.softuni.tutorme.entities.dtos.PostDetailDTO;
-import bg.softuni.tutorme.service.exceptions.UserNotFoundException;
+import bg.softuni.tutorme.entities.dtos.posts.AddPostingDTO;
+import bg.softuni.tutorme.entities.dtos.posts.PostDetailDTO;
 
 import java.security.Principal;
 import java.util.List;

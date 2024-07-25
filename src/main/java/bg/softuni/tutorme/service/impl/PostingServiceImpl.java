@@ -1,11 +1,10 @@
 package bg.softuni.tutorme.service.impl;
 
 import bg.softuni.tutorme.entities.UserEntity;
-import bg.softuni.tutorme.entities.dtos.AddPostingDTO;
-import bg.softuni.tutorme.entities.dtos.PostDetailDTO;
+import bg.softuni.tutorme.entities.dtos.posts.AddPostingDTO;
+import bg.softuni.tutorme.entities.dtos.posts.PostDetailDTO;
 import bg.softuni.tutorme.repositories.UserRepository;
 import bg.softuni.tutorme.service.PostingService;
-import bg.softuni.tutorme.service.exceptions.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.MediaType;
