@@ -39,8 +39,8 @@
         </form>
       </div>
 
+      <th:block th:if="${isAlreadyEnrolled && !isCourseOwner}">
       <div class="card card-shadow p-3 text-center">
-        <th:block th:if="${isAlreadyEnrolled}">
           <div class="container mt-2">
             <h5 class="text-center">Make an appointment</h5>
             <p th:if="${errorDt}" class="text-danger">Select an available slot in the future.</p>
@@ -67,8 +67,8 @@
               <p class="text-success" th:text="${dateTimeObjectSuccess.dateTime}"></p>
             </th:block>
           </div>
-        </th:block>
       </div>
+      </th:block>
 
     </div>
 

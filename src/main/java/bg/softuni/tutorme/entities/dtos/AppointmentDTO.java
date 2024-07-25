@@ -1,20 +1,32 @@
 package bg.softuni.tutorme.entities.dtos;
 
+import java.time.LocalDateTime;
+
 public class AppointmentDTO {
 
     //todo finish defining dto
-    private String courseName;
+    private String courseTitle;
+    private LocalDateTime date;
 
     public AppointmentDTO() {
 
     }
 
-    public String getCourseName() {
-        return courseName;
+    public String getCourseTitle() {
+        return courseTitle;
     }
 
-    public AppointmentDTO setCourseName(String courseName) {
-        this.courseName = courseName;
+    public AppointmentDTO setCourseTitle(String courseTitle) {
+        this.courseTitle = courseTitle;
+        return this;
+    }
+
+    public LocalDateTime getDate() {
+        return date;
+    }
+
+    public AppointmentDTO setDate(LocalDateTime date) {
+        this.date = date;
         return this;
     }
 }

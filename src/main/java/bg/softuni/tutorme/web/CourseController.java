@@ -111,7 +111,15 @@ public class CourseController {
         if (this.userEntityService.isEnrolledInCourse(principal.getName(), id)
                 || this.courseService.isCourseOwner(principal.getName(), id)){
             model.addAttribute("isAlreadyEnrolled", true);
+        } else {
+            model.addAttribute("isAlreadyEnrolled", false);
         }
+        if (this.courseService.isCourseOwner(principal.getName(), id)){
+            model.addAttribute("isCourseOwner", true);
+        } else {
+            model.addAttribute("isCourseOwner", false);
+        }
+
 
         return "course";
     }

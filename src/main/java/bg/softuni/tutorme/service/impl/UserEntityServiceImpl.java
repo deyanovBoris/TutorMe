@@ -1,7 +1,9 @@
 package bg.softuni.tutorme.service.impl;
 
+import bg.softuni.tutorme.entities.Appointment;
 import bg.softuni.tutorme.entities.Course;
 import bg.softuni.tutorme.entities.UserEntity;
+import bg.softuni.tutorme.entities.dtos.AppointmentDTO;
 import bg.softuni.tutorme.entities.dtos.TutorFeatureDTO;
 import bg.softuni.tutorme.entities.dtos.UserProfileDTO;
 import bg.softuni.tutorme.entities.dtos.courses.CourseInfoDTO;
@@ -109,13 +111,19 @@ public class UserEntityServiceImpl implements UserEntityService {
 
         return this.modelMapper.map(user, UserProfileDTO.class)
                 .setCoursesAttending(mapCourses(user.getCoursesAttending()))
-                .setCoursesTutoring(mapCourses(user.getCoursesTutoring()));
+                .setCoursesTutoring(mapCourses(user.getCoursesTutoring()))
+                .setAppointments(mapAppointments(user.getAppointments()));
     }
-
     private List<CourseShortInfoDTO> mapCourses(List<Course> courses){
         return courses
                 .stream()
                 .map(c -> this.modelMapper.map(c, CourseShortInfoDTO.class))
+                .collect(Collectors.toList());
+    }
+    private List<AppointmentDTO> mapAppointments(List<Appointment> appointments) {
+        return appointments
+                .stream()
+                .map(a -> this.modelMapper.map(a, AppointmentDTO.class))
                 .collect(Collectors.toList());
     }
 

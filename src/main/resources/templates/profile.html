@@ -31,55 +31,26 @@
                     <p th:text="${userData.biography}">Bio</p>
                 </div>
             </div>
-
+        <!-- Appointments  -->
             <div class="card p-4 mt-4 mb-4" style="height: 397px">
                 <h5>Appointments</h5>
                 <div class="scroll-vertical">
-                    <a th:href="@{/}" style="text-decoration: none">
+                    <a th:each="app : ${userData.appointments}" th:href="@{/}" style="text-decoration: none">
                         <div class="card p-2 mb-2">
                             <div class="appointment-info">
-                                <span>Course 1</span>
-                                <span>July 30, 2024 - 10:00 AM</span>
-                                <span>Room 101</span>
+                                <span th:text="${app.courseTitle}">Course 1</span>
+                                <span th:text="${#temporals.format(app.date, 'dd-MM-yyyy HH:mm')}">July 30, 2024 - 10:00 AM</span>
+<!--                                <span>Room 101</span>-->
                             </div>
                         </div>
                     </a>
-                    <div class="card p-2 mb-2">
-                        <div class="appointment-info">
-                            <span>Course 1</span>
-                            <span>July 30, 2024 - 10:00 AM</span>
-                            <span>Room 101</span>
-                        </div>
-                    </div>
-                    <div class="card p-2 mb-2">
-                        <div class="appointment-info">
-                            <span>Course 2</span>
-                            <span>August 5, 2024 - 2:00 PM</span>
-                            <span>Room 202</span>
-                        </div>
-                    </div>
-                    <div class="card p-2 mb-2">
-                        <div class="appointment-info">
-                            <span>Course 3</span>
-                            <span>August 12, 2024 - 11:00 AM</span>
-                            <span>Online</span>
-                        </div>
-                    </div>
-                    <div class="card p-2 mb-2">
-                        <div class="appointment-info">
-                            <span>Course 3</span>
-                            <span>August 12, 2024 - 11:00 AM</span>
-                            <span>Online</span>
-                        </div>
-                    </div>
-                    <!-- Add more appointment cards as needed -->
                 </div>
             </div>
         </div>
 
 
 
-        <!-- Courses and Appointments Section -->
+        <!-- Courses -->
         <div class="col-lg-8">
             <!-- My Courses Section -->
             <div class="card p-3 mb-4" style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-radius: 10px;">

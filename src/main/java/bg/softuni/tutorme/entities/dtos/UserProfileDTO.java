@@ -16,7 +16,6 @@ public class UserProfileDTO {
 
     private List<CourseShortInfoDTO> coursesAttending;
     private List<CourseShortInfoDTO> coursesTutoring;
-
     private List<AppointmentDTO> appointments;
 
     public UserProfileDTO() {
