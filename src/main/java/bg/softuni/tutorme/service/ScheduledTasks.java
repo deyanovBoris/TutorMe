@@ -22,7 +22,7 @@ public class ScheduledTasks {
         this.tutorApplicationRepository = tutorApplicationRepository;
     }
 
-    @Scheduled(cron = "0 */30 * * * *")
+    @Scheduled(cron = "0 */15 * * * *")
     public void clearUnapprovedTutorRequests(){
         logger.info("Performing cleaning of unapproved tutor requests");
 

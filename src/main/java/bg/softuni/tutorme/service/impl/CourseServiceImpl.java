@@ -2,6 +2,8 @@ package bg.softuni.tutorme.service.impl;
 
 import bg.softuni.tutorme.entities.Course;
 import bg.softuni.tutorme.entities.UserEntity;
+import bg.softuni.tutorme.entities.dtos.AppointmentCourseDTO;
+import bg.softuni.tutorme.entities.dtos.AppointmentDTO;
 import bg.softuni.tutorme.entities.dtos.InstructorDTO;
 import bg.softuni.tutorme.entities.dtos.StudentsShortInfoDto;
 import bg.softuni.tutorme.entities.dtos.courses.CourseAddDTO;
@@ -104,23 +106,38 @@ public class CourseServiceImpl implements CourseService {
 
         CourseInfoDTO courseInfoDTO = this.modelMapper.map(course, CourseInfoDTO.class);
 
-        List<StudentsShortInfoDto> studentsDto = course.getStudents()
+        courseInfoDTO.setStudents(getStudents(course));
+        courseInfoDTO.setInstructor(getInstructor(course));
+        courseInfoDTO.setAppointments(getAppointments(course));
+
+        return courseInfoDTO;
+    }
+
+    private static List<AppointmentCourseDTO> getAppointments(Course course) {
+        return course.getAppointments()
+                .stream()
+                .map(a -> new AppointmentCourseDTO()
+                        .setUsername(a.getMadeByUser().getUsername())
+                        .setId(a.getId())
+                        .setStudentName(a.getMadeByUser().getName())
+                        .setDate(a.getDate()))
+                .collect(Collectors.toList());
+    }
+
+    private static List<StudentsShortInfoDto> getStudents(Course course) {
+        return course.getStudents()
                 .stream()
                 .map(s -> new StudentsShortInfoDto()
                         .setName(s.getName())
                         .setPhotoUrl(s.getProfilePhotoUrl()))
                 .limit(5)
                 .collect(Collectors.toList());
-
-        InstructorDTO instructor = new InstructorDTO()
+    }
+    private static InstructorDTO getInstructor(Course course) {
+        return new InstructorDTO()
                 .setName(course.getCourseOwner().getName())
                 .setPhotoUrl(course.getCourseOwner().getProfilePhotoUrl())
                 .setBiography(course.getCourseOwner().getBiography());
-
-        courseInfoDTO.setStudents(studentsDto);
-        courseInfoDTO.setInstructor(instructor);
-
-        return courseInfoDTO;
     }
 
     @Override

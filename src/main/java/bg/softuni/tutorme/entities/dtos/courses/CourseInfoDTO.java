@@ -1,5 +1,7 @@
 package bg.softuni.tutorme.entities.dtos.courses;
 
+import bg.softuni.tutorme.entities.dtos.AppointmentCourseDTO;
+import bg.softuni.tutorme.entities.dtos.AppointmentDTO;
 import bg.softuni.tutorme.entities.dtos.InstructorDTO;
 import bg.softuni.tutorme.entities.dtos.StudentsShortInfoDto;
 
@@ -17,6 +19,8 @@ public class CourseInfoDTO {
     private List<StudentsShortInfoDto> students;
 
     private InstructorDTO instructor;
+
+    private List<AppointmentCourseDTO> appointments;
 
     public CourseInfoDTO() {
     }
@@ -72,6 +76,15 @@ public class CourseInfoDTO {
 
     public CourseInfoDTO setInstructor(InstructorDTO instructor) {
         this.instructor = instructor;
+        return this;
+    }
+
+    public List<AppointmentCourseDTO> getAppointments() {
+        return appointments;
+    }
+
+    public CourseInfoDTO setAppointments(List<AppointmentCourseDTO> appointments) {
+        this.appointments = appointments;
         return this;
     }
 }

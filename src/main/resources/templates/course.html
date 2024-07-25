@@ -81,7 +81,7 @@
       </div>
 
       <!-- Students List -->
-      <div class="card card-shadow p-3">
+      <div class="card card-shadow p-3 mb-4">
         <h3>Students</h3>
         <div class="d-flex flex-wrap">
           <div th:if="${course.students.size() == 0}">No students currently enrolled</div>
@@ -89,6 +89,23 @@
             <img th:src="${student.photoUrl}" class="student-photo" alt="Student Photo">
             <div class="student-name" th:text="${student.name}">Student Name</div>
           </div>
+        </div>
+      </div>
+
+      <div th:if = "${isAlreadyEnrolled}" class="card card-shadow p-3 mb-4" style="height: 350px">
+        <h5>Appointments</h5>
+        <p th:if="${course.appointments.size() == 0}">No appointments</p>
+        <div class="mt-2" style="height: 300px; overflow-y: auto;">
+          <a th:each="app : ${course.appointments}" th:href="@{/}" style="text-decoration: none">
+            <div class="card p-2 mb-2">
+              <div class="ps-4 pe-4" style="display: flex; justify-content: space-between; align-items: center;">
+                <span th:text="${app.studentName}">Student Name</span>
+                <span th:text="${app.username}">Student Name</span>
+                <span th:text="${#temporals.format(app.date, 'dd-MM-yyyy HH:mm')}">July 30, 2024 - 10:00 AM</span>
+                <!--  <span>Room 101</span>-->
+              </div>
+            </div>
+          </a>
         </div>
       </div>
     </div>
