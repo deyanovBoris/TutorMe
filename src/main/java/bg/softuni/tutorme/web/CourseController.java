@@ -149,13 +149,10 @@ public class CourseController {
         if (!success){
             rAtt.addFlashAttribute("dateTimeObject", dateTimeDTO);
             rAtt.addFlashAttribute("errorDt", true);
-
             return "redirect:/course/{courseId}";
         }
-
         rAtt.addFlashAttribute("dateTimeObjectSuccess", dateTimeDTO);
         rAtt.addFlashAttribute("successApt", true);
-
         return "redirect:/course/{courseId}";
     }
 }

@@ -74,7 +74,7 @@
             </div>
 
             <div sec:authorize="hasRole('TUTOR')" class="card p-3 mb-4" style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-radius: 10px;">
-                <h5>Attending Courses</h5>
+                <h5>My Courses</h5>
                 <div class="scroll-horizontal">
                     <div th:if="${userData.getCoursesTutoring().size() == 0}">
                         <p class="ms-2">Not attending any courses</p>

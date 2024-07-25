@@ -5,6 +5,7 @@ import bg.softuni.tutorme.entities.dtos.subjects.SubjectFeatureDTO;
 import bg.softuni.tutorme.repositories.SubjectRepository;
 import bg.softuni.tutorme.service.SubjectService;
 import bg.softuni.tutorme.service.UserEntityService;
+import bg.softuni.tutorme.service.exceptions.UserNotAllowedException;
 import bg.softuni.tutorme.service.exceptions.UserNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -56,12 +57,6 @@ public class HomeController {
 //    public String handleAttempt(){
 //
 //    }
-
-
-    @ResponseStatus(value = HttpStatus.FORBIDDEN, reason = "You are not allowed to view this page")
-    public class UserNotAllowedException extends RuntimeException {
-        private static final long serialVersionUID = 1L;
-    }
 
     @GetMapping("/")
     public String index(Model model){
