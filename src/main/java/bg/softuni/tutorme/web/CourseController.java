@@ -135,24 +135,4 @@ public class CourseController {
 
         return "redirect:/course/{id}";
     }
-
-    @PostMapping("/course/make-appointment/{courseId}")
-    public String makeAppointment(@PathVariable("courseId") long courseId,
-                                  Model model,
-                                  DateTimeDTO dateTimeDTO,
-                                  RedirectAttributes rAtt,
-                                  Principal principal)
-            throws UserNotFoundException, CourseNotFoundException {
-
-        boolean success = this.appointmentService.makeAppointment(courseId, dateTimeDTO, principal);
-
-        if (!success){
-            rAtt.addFlashAttribute("dateTimeObject", dateTimeDTO);
-            rAtt.addFlashAttribute("errorDt", true);
-            return "redirect:/course/{courseId}";
-        }
-        rAtt.addFlashAttribute("dateTimeObjectSuccess", dateTimeDTO);
-        rAtt.addFlashAttribute("successApt", true);
-        return "redirect:/course/{courseId}";
-    }
 }

@@ -54,7 +54,9 @@ public class AppointmentServiceImpl implements AppointmentService {
         Course course = this.courseRepository.findById(courseId)
                 .orElseThrow(CourseNotFoundException::new);
 
-        if (course.getCourseOwner().getUsername().equals(principal.getName())){
+        UserEntity courseOwner = course.getCourseOwner();
+
+        if (courseOwner.getUsername().equals(principal.getName())){
             throw new IllegalArgumentException();
         }
 

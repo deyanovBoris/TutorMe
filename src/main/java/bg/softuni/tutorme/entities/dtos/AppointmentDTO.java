@@ -4,12 +4,20 @@ import java.time.LocalDateTime;
 
 public class AppointmentDTO {
 
-    //todo finish defining dto
+
+    private long id;
     private String courseTitle;
     private LocalDateTime date;
 
     public AppointmentDTO() {
 
+    }
+    public long getId() {
+        return id;
+    }
+    public AppointmentDTO setId(long id) {
+        this.id = id;
+        return this;
     }
 
     public String getCourseTitle() {

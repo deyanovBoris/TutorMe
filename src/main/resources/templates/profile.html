@@ -3,10 +3,6 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec='http://www.thymeleaf.org/extras/spring-security'>
 <head>
-<!--    <meta charset="UTF-8">-->
-<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
-<!--    <title>Profile Page</title>-->
-<!--    <link href="/css/bootstrap.min.css" rel="stylesheet">-->
     <head th:include="fragments/head:: headerFragment (pageTitle = 'Profile: ' + ${username})">
     </head>
 </head>
@@ -33,9 +29,9 @@
             </div>
         <!-- Appointments  -->
             <div class="card p-4 mt-4 mb-4" style="height: 397px">
-                <h5>Appointments</h5>
+                <h5>Appointments made by you</h5>
                 <div class="scroll-vertical">
-                    <a th:each="app : ${userData.appointments}" th:href="@{/}" style="text-decoration: none">
+                    <a th:each="app : ${userData.appointments}" th:href="@{/appointment/{id}(id=${app.id})}" style="text-decoration: none">
                         <div class="card p-2 mb-2">
                             <div class="appointment-info">
                                 <span th:text="${app.courseTitle}">Course 1</span>

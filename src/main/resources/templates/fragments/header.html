@@ -81,7 +81,16 @@
             <form sec:authorize="isAuthenticated()"
                   th:method = "POST"
                   th:action="@{/logout}">
-                <label sec:authorize="isAuthenticated()" class="text-primary me-2">Welcome, <span sec:authentication="name"></span> </label>
+                <label sec:authorize="isAuthenticated()"
+                       class="text-primary"
+                       th:text="#{nav_bar_welcome} + ','">
+                </label>
+                <a th:with="username=${#authentication.getName()}"
+                   th:href="@{/user/{username}(username = ${username})}"
+                   sec:authentication="name"
+                   class="me-2">
+                    Username
+                </a>
                 <button type="submit" class="btn btn-primary" th:text="#{nav_bar_logout}"></button>
             </form>
 
