@@ -11,4 +11,6 @@ public interface AppointmentService {
     boolean makeAppointment(long courseId, DateTimeDTO dateTimeDTO, Principal principal) throws UserNotFoundException, CourseNotFoundException;
 
     AppointmentDetailDTO getAppointmentById(long id);
+
+    void deleteAppointment(long id);
 }

@@ -8,6 +8,7 @@ import bg.softuni.tutorme.service.exceptions.UserNotAllowedException;
 import bg.softuni.tutorme.service.exceptions.UserNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -60,5 +61,21 @@ public class AppointmentController {
         rAtt.addFlashAttribute("dateTimeObjectSuccess", dateTimeDTO);
         rAtt.addFlashAttribute("successApt", true);
         return "redirect:/course/{courseId}";
+    }
+
+    @DeleteMapping("/appointment/delete/{id}")
+    public String deleteAppointment(@PathVariable("id") long id,
+                                    Principal principal){
+
+        AppointmentDetailDTO appointmentById = this.appointmentService.getAppointmentById(id);
+        String username = principal.getName();
+        if (!username.equals(appointmentById.getMadeBy().getUsername())
+                && !username.equals(appointmentById.getCourseOwner().getUsername())){
+            throw new UserNotAllowedException();
+        }
+
+        this.appointmentService.deleteAppointment(id);
+
+        return "redirect:/";
     }
 }

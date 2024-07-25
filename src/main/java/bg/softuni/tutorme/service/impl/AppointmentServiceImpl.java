@@ -87,6 +87,12 @@ public class AppointmentServiceImpl implements AppointmentService {
                 .setMadeBy(mapUserDTO(appointment.getUser()))
                 .setCourseOwner(mapUserDTO(appointment.getCourse().getCourseOwner()));
     }
+
+    @Override
+    public void deleteAppointment(long id) {
+        this.appointmentRepository.deleteById(id);
+    }
+
     private UserShortDTO mapUserDTO(UserEntity user) {
         return this.modelMapper.map(user, UserShortDTO.class)
                 .setFullName(user.getName());
