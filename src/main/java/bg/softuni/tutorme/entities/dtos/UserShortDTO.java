@@ -5,6 +5,8 @@ public class UserShortDTO {
     private long id;
     private String profilePhotoUrl;
     private String username;
+    private String email;
+    private String fullName;
 
     public UserShortDTO() {
     }
@@ -33,6 +35,24 @@ public class UserShortDTO {
 
     public UserShortDTO setUsername(String username) {
         this.username = username;
+        return this;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public UserShortDTO setEmail(String email) {
+        this.email = email;
+        return this;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public UserShortDTO setFullName(String fullName) {
+        this.fullName = fullName;
         return this;
     }
 }

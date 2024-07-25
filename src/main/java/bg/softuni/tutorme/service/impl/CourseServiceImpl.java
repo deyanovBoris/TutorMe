@@ -3,7 +3,6 @@ package bg.softuni.tutorme.service.impl;
 import bg.softuni.tutorme.entities.Course;
 import bg.softuni.tutorme.entities.UserEntity;
 import bg.softuni.tutorme.entities.dtos.AppointmentCourseDTO;
-import bg.softuni.tutorme.entities.dtos.AppointmentDTO;
 import bg.softuni.tutorme.entities.dtos.InstructorDTO;
 import bg.softuni.tutorme.entities.dtos.StudentsShortInfoDto;
 import bg.softuni.tutorme.entities.dtos.courses.CourseAddDTO;
@@ -27,7 +26,6 @@ import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Service
 public class CourseServiceImpl implements CourseService {
@@ -117,9 +115,9 @@ public class CourseServiceImpl implements CourseService {
         return course.getAppointments()
                 .stream()
                 .map(a -> new AppointmentCourseDTO()
-                        .setUsername(a.getMadeByUser().getUsername())
+                        .setUsername(a.getUser().getUsername())
                         .setId(a.getId())
-                        .setStudentName(a.getMadeByUser().getName())
+                        .setStudentName(a.getUser().getName())
                         .setDate(a.getDate()))
                 .collect(Collectors.toList());
     }

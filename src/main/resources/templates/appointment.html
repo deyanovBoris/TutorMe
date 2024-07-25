@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:include="fragments/head:: headerFragment (pageTitle = 'Appointment')">
+</head>
+
+<body>
+
+<div th:replace="~{/fragments/color-toggle}">Color toggle</div>
+
+<div th:replace="~{fragments/header::navbar(activeLink=${'courses'})}">Header</div>
+
+<div class="b-example-divider"></div>
+
+<div class="container mt-5 mb-5">
+  <div class="d-flex justify-content-center">
+    <div class="card p-3">
+      <div class="card-body">
+      <div class="user-info">
+        <div class="user-left">
+          <img th:src="${appointmentData.madeBy.profilePhotoUrl}" alt="User Photo">
+          <div>
+            <h5>User Info</h5>
+            <p>Name: <span th:text="${appointmentData.madeBy.fullName}">John Doe</span></p>
+            <p>Email: <span th:text="${appointmentData.madeBy.email}">john@example.com</span></p>
+          </div>
+        </div>
+        <div class="user-right">
+          <div>
+            <h5>Course Owner</h5>
+            <p>Name: <span th:text="${appointmentData.courseOwner.fullName}">Jane Smith</span></p>
+            <p>Email: <span th:text="${appointmentData.courseOwner.email}">jane@example.com</span></p>
+          </div>
+          <img th:src="${appointmentData.courseOwner.profilePhotoUrl}" alt="Course Owner Photo">
+        </div>
+      </div>
+      <div class="details">
+        <h5>Appointment</h5>
+        <h5 th:text="${appointmentData.courseTitle}" class="card-title">Introduction to Programming</h5>
+        <p>At: <span th:text="${#temporals.format(appointmentData.date, 'dd-MM-yyyy HH:mm')}">Date: 2024-08-01</span></p>
+        <p><a href="https://example.com/meeting" class="card-link">Join Meeting</a></p>
+      </div>
+      <div class="btn-group justify-content-center" role="group">
+<!--        <form action="/approve" method="post">-->
+<!--          <button type="submit" class="btn btn-success">Approve</button>-->
+<!--        </form>-->
+<!--        <form action="/reject" method="post">-->
+<!--          <button type="submit" class="btn btn-warning">Reject</button>-->
+<!--        </form>-->
+        <form action="/delete" method="post">
+          <button type="submit" class="btn btn-danger">Cancel</button>
+        </form>
+      </div>
+    </div>
+    </div>
+  </div>
+</div>
+
+<div class="b-example-divider"></div>
+
+<div th:replace="~{fragments/footer}">Footer</div>
+
+<script src="/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

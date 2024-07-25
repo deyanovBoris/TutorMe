@@ -1,0 +1,50 @@
+
+.card {
+    width: 100%;
+    max-width: 700px;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+.user-info {
+    display: flex;
+    justify-content: space-between;
+}
+.user-left, .user-right {
+    display: flex;
+    align-items: center;
+}
+.user-left img, .user-right img {
+    width: 75px;
+    height: 75px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+.user-right img {
+    margin-left: 10px;
+    margin-right: 0;
+}
+.user-left div, .user-right div {
+    line-height: 1.2; /* Adjusted line height for smaller vertical spacing */
+}
+.card-title {
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.details, .btn-group {
+    width: 100%;
+    text-align: center;
+
+}
+.btn-group form {
+    display: inline;
+    align-items: center/* Make forms inline to keep the buttons in a single line */
+}

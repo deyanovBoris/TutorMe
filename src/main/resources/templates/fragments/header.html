@@ -39,9 +39,9 @@
                    th:text="#{nav_bar_start_tutoring}"
                    th:classappend="${activeLink == 'start-tutoring'} ? 'text-secondary'">Start Tutoring</a>
             </li>
-            <li>
-                <a href="#" class="nav-link px-2">About</a>
-            </li>
+<!--            <li>-->
+<!--                <a href="#" class="nav-link px-2">About</a>-->
+<!--            </li>-->
             <li sec:authorize="isAuthenticated()" th:with="username=${#authentication.getName()}">
                 <a  th:href="@{/user/{username}(username=${username})}"
                     class="nav-link px-2"

@@ -3,7 +3,6 @@ package bg.softuni.tutorme.entities;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 
 @Entity
 @Table(name = "appointments")
@@ -50,11 +49,11 @@ public class Appointment {
         return this;
     }
 
-    public UserEntity getMadeByUser() {
+    public UserEntity getUser() {
         return user;
     }
 
-    public Appointment setMadeByUser(UserEntity user) {
+    public Appointment setUser(UserEntity user) {
         this.user = user;
         return this;
     }

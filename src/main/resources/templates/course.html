@@ -92,11 +92,12 @@
         </div>
       </div>
 
+<!--      Appointments-->
       <div th:if = "${isAlreadyEnrolled}" class="card card-shadow p-3 mb-4" style="height: 350px">
         <h5>Appointments</h5>
         <p th:if="${course.appointments.size() == 0}">No appointments</p>
         <div class="mt-2" style="height: 300px; overflow-y: auto;">
-          <a th:each="app : ${course.appointments}" th:href="@{/}" style="text-decoration: none">
+          <a th:each="app : ${course.appointments}" th:href="@{/appointment/{id}(id=${app.id})}" style="text-decoration: none">
             <div class="card p-2 mb-2">
               <div class="ps-4 pe-4" style="display: flex; justify-content: space-between; align-items: center;">
                 <span th:text="${app.studentName}">Student Name</span>
