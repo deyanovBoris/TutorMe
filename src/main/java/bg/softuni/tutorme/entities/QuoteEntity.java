@@ -10,7 +10,7 @@ public class QuoteEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false, unique = true, length = 1000)
     private String quote;
 
     @Column(nullable = false)

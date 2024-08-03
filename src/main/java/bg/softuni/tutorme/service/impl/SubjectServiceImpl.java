@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 
@@ -18,10 +19,12 @@ public class SubjectServiceImpl implements SubjectService {
 
     private final SubjectRepository subjectRepository;
     private final ModelMapper modelMapper;
+    private final Random random;
 
-    public SubjectServiceImpl(SubjectRepository subjectRepository, ModelMapper modelMapper) {
+    public SubjectServiceImpl(SubjectRepository subjectRepository, ModelMapper modelMapper, Random random) {
         this.subjectRepository = subjectRepository;
         this.modelMapper = modelMapper;
+        this.random = random;
     }
 
     @Override
@@ -29,7 +32,7 @@ public class SubjectServiceImpl implements SubjectService {
         return this.subjectRepository
                 .findByIsFeaturedTrue()
                 .stream()
-                .sorted(Comparator.comparingInt(e -> ThreadLocalRandom.current().nextInt()))
+                .sorted(Comparator.comparingInt(e -> random.nextInt()))
                 .limit(3)
                 .map(s -> modelMapper.map(s, SubjectFeatureDTO.class))
                 .collect(Collectors.toList());

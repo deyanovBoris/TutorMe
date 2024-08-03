@@ -6,6 +6,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 
+import java.util.Random;
+
 @Configuration
 public class Config {
 
@@ -13,4 +15,7 @@ public class Config {
     public ModelMapper modelMapper(){
         return new ModelMapper();
     }
+
+    @Bean
+    public Random random() {return new Random();}
 }

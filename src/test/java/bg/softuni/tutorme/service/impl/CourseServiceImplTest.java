@@ -3,6 +3,7 @@ package bg.softuni.tutorme.service.impl;
 import bg.softuni.tutorme.entities.Course;
 import bg.softuni.tutorme.entities.UserEntity;
 import bg.softuni.tutorme.entities.dtos.courses.CourseAddDTO;
+import bg.softuni.tutorme.entities.dtos.courses.CourseShortInfoDTO;
 import bg.softuni.tutorme.entities.enums.CourseType;
 import bg.softuni.tutorme.repositories.CourseRepository;
 import bg.softuni.tutorme.repositories.SubjectRepository;
@@ -24,6 +25,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @ExtendWith(MockitoExtension.class)
 public class CourseServiceImplTest {
@@ -58,26 +60,4 @@ public class CourseServiceImplTest {
 
         Assertions.assertThrows(UserNotFoundException.class, () -> toTest.submitCourse(courseAddDTO));
     }
-
-    @Disabled
-    @Test
-    void testSubmitCourse(){
-        CourseAddDTO courseAddDTO = new CourseAddDTO()
-                .setOwnerUsername("testUser")
-                .setCourseType(CourseType.INDIVIDUAL)
-                .setSubjects(List.of(1L, 2L, 3L))
-                .setCourseImageUrl("https://example.com")
-                .setDescription("test desc")
-                .setStartDate(LocalDate.of(2024, 10, 10))
-                .setEndDate(LocalDate.of(2024, 10, 11))
-                .setTitle("testCourse");
-
-        UserEntity user = new UserEntity().setUsername("testUser");
-
-        Mockito.when(mockUserRepository.findByUsername("testUser"))
-                .thenReturn(Optional.of(user));
-        Mockito.when(mockModelMapper.map(courseAddDTO, Course.class))
-                .thenReturn(new Course());
-    }
-
 }

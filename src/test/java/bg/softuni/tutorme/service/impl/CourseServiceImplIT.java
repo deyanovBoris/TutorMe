@@ -4,6 +4,7 @@ import bg.softuni.tutorme.entities.Course;
 import bg.softuni.tutorme.entities.Subject;
 import bg.softuni.tutorme.entities.UserEntity;
 import bg.softuni.tutorme.entities.dtos.courses.CourseAddDTO;
+import bg.softuni.tutorme.entities.dtos.courses.CourseShortInfoDTO;
 import bg.softuni.tutorme.entities.enums.CourseType;
 import bg.softuni.tutorme.repositories.CourseRepository;
 import bg.softuni.tutorme.repositories.SubjectRepository;
@@ -82,7 +83,7 @@ public class CourseServiceImplIT {
         courseService.submitCourse(courseAddDTO);
 
         //get course that we just submitted
-        Course byId = courseRepository.findById(1L).get();
+        Course byId = courseRepository.findByTitle(courseAddDTO.getTitle()).get();
 
         Assertions.assertEquals(courseAddDTO.getTitle(), byId.getTitle());
         Assertions.assertEquals(courseAddDTO.getOwnerUsername(), byId.getCourseOwner().getUsername());
@@ -91,6 +92,41 @@ public class CourseServiceImplIT {
         Assertions.assertEquals(courseAddDTO.getDescription(), byId.getDescription());
         Assertions.assertEquals(2, byId.getSubjects().size());
     }
+
+    @Test
+    @Transactional
+    void testGetAllCoursesReturnsProperly(){
+        Course course1 = new Course()
+                .setCourseOwner(this.userRepository.findByUsername("test").get())
+                .setCourseType(CourseType.INDIVIDUAL)
+                .setSubjects(List.of(this.subjectRepository.findById(1L).get()))
+                .setCourseImageUrl("https://example.com")
+                .setDescription("test desc")
+                .setStartDate(LocalDate.of(2024, 10, 10))
+                .setEndDate(LocalDate.of(2024, 10, 11))
+                .setTitle("testCourse");
+
+        Course course2 = new Course()
+                .setCourseOwner(this.userRepository.findByUsername("test").get())
+                .setCourseType(CourseType.INDIVIDUAL)
+                .setSubjects(List.of(this.subjectRepository.findById(2L).get()))
+                .setCourseImageUrl("https://example.com/test")
+                .setDescription("test desc")
+                .setStartDate(LocalDate.of(2024, 11, 10))
+                .setEndDate(LocalDate.of(2024, 12, 11))
+                .setTitle("testCourse2");
+
+
+        this.courseRepository.saveAll(List.of(course1, course2));
+
+        List<CourseShortInfoDTO> allCourses = this.courseService.getAllCourses();
+
+        Assertions.assertInstanceOf(java.util.List.class, allCourses);
+        Assertions.assertInstanceOf(CourseShortInfoDTO.class, allCourses.getFirst());
+        Assertions.assertEquals(2, allCourses.size());
+        Assertions.assertEquals(1, allCourses.getFirst().getDurationInWeeks());
+    }
+
 
 
 }

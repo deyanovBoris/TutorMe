@@ -19,3 +19,7 @@ logging:
 
 server:
   port: 8080
+
+quotes:
+  api:
+    url: "https://api.quotable.io/quotes/random?limit=50"
