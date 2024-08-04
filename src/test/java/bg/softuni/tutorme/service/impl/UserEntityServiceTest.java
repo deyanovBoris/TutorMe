@@ -98,4 +98,6 @@ public class UserEntityServiceTest {
         Assertions.assertThrows(UserNotFoundException.class,
                 () -> this.toTest.getUserIdByUsername("nonExistingUser"));
     }
+
+
 }

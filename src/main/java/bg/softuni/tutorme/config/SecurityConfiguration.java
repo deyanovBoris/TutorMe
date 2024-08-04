@@ -30,7 +30,7 @@ public class SecurityConfiguration {
             //Set up which urls are available to whom
                 registry
                     .requestMatchers("/admin/**").hasRole("ADMIN")
-                    .requestMatchers("/courses/add").hasRole("TUTOR")
+                    .requestMatchers("/courses/all/add").hasRole("TUTOR")
                     .requestMatchers("/login", "/register").hasRole("ANONYMOUS")
                     .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                     .requestMatchers("/","/api/quotes/random","/login/login-error", "access-denied", "start-tutoring", "courses/all/{pageNo}").permitAll()

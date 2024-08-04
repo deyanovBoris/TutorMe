@@ -7,4 +7,5 @@ import org.springframework.web.bind.annotation.ResponseStatus;
         reason = "You are not allowed to view this page")
 public class UserNotAllowedException extends RuntimeException {
     private static final long serialVersionUID = 1L;
+
 }

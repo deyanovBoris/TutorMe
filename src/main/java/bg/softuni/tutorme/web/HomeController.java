@@ -22,19 +22,17 @@ import java.util.List;
 public class HomeController {
     private final UserEntityService userEntityService;
     private final SubjectService subjectService;
-
     private final QuoteService quoteService;
 
     public HomeController(UserEntityService userEntityService,
                           SubjectService subjectService,
-                          SubjectRepository subjectRepository, QuoteService quoteService) {
+                          QuoteService quoteService) {
         this.userEntityService = userEntityService;
         this.subjectService = subjectService;
         this.quoteService = quoteService;
     }
 
     @GetMapping("/user/{username}")
-//    @PreAuthorize("hasRole('ADMIN')")
     public String dashboard(@PathVariable("username") String username, Model model, Principal principal) throws UserNotFoundException {
 
         String usernamePrincipal;
@@ -57,17 +55,10 @@ public class HomeController {
         return "profile";
     }
 
-//    @ResponseStatus(code = HttpStatus.FORBIDDEN)
-//    @ExceptionHandler(UserNotAllowedException.class)
-//    public String handleAttempt(){
-//
-//    }
-
     @GetMapping("/")
     public String index(Model model){
         List<SubjectFeatureDTO> featuredSubjects = this.subjectService.getFeaturedSubjects();
         List<TutorFeatureDTO> tutorFeatureDTOS = this.userEntityService.getFeaturedTutors();
-
 
         model.addAttribute("homePageStyles", true);
         model.addAttribute("featuredSubjects",  featuredSubjects);
@@ -75,10 +66,4 @@ public class HomeController {
 
         return "index";
     }
-
-    @GetMapping("/access-denied")
-    public String accessDenied(){
-        return "403";
-    }
-
 }

@@ -104,7 +104,7 @@ public class CourseController {
     }
 
     @GetMapping("/course/{id}")
-    public String courseById(@PathVariable("id") long id, Model model, Principal principal) throws UserNotFoundException {
+    public String courseById(@PathVariable("id") long id, Model model, Principal principal) throws UserNotFoundException, CourseNotFoundException {
         model.addAttribute("coursePageStyling", true);
         model.addAttribute("course", this.courseService.getCourseById(id));
 
@@ -119,7 +119,6 @@ public class CourseController {
         } else {
             model.addAttribute("isCourseOwner", false);
         }
-
 
         return "course";
     }

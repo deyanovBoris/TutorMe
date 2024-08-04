@@ -1,17 +1,13 @@
 package bg.softuni.tutorme.service.impl;
 
 import bg.softuni.tutorme.entities.Course;
-import bg.softuni.tutorme.entities.UserEntity;
 import bg.softuni.tutorme.entities.dtos.courses.CourseAddDTO;
-import bg.softuni.tutorme.entities.dtos.courses.CourseShortInfoDTO;
-import bg.softuni.tutorme.entities.enums.CourseType;
 import bg.softuni.tutorme.repositories.CourseRepository;
 import bg.softuni.tutorme.repositories.SubjectRepository;
 import bg.softuni.tutorme.repositories.UserRepository;
 import bg.softuni.tutorme.service.exceptions.UserNotFoundException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -21,11 +17,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @ExtendWith(MockitoExtension.class)
 public class CourseServiceImplTest {

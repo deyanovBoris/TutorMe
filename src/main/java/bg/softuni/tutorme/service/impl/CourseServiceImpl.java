@@ -12,6 +12,7 @@ import bg.softuni.tutorme.repositories.CourseRepository;
 import bg.softuni.tutorme.repositories.SubjectRepository;
 import bg.softuni.tutorme.repositories.UserRepository;
 import bg.softuni.tutorme.service.CourseService;
+import bg.softuni.tutorme.service.exceptions.CourseNotFoundException;
 import bg.softuni.tutorme.service.exceptions.UserNotFoundException;
 import org.hibernate.ObjectNotFoundException;
 import org.modelmapper.ModelMapper;
@@ -97,10 +98,10 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     @Transactional
-    public CourseInfoDTO getCourseById(long id) {
+    public CourseInfoDTO getCourseById(long id) throws CourseNotFoundException {
         Course course = this.courseRepository
                 .findById(id)
-                .orElseThrow(() -> new ObjectNotFoundException(id, "course"));
+                .orElseThrow(() -> new CourseNotFoundException(id));
 
         CourseInfoDTO courseInfoDTO = this.modelMapper.map(course, CourseInfoDTO.class);
 

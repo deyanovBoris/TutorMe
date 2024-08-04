@@ -10,6 +10,7 @@ import bg.softuni.tutorme.repositories.SubjectRepository;
 import bg.softuni.tutorme.repositories.TutorApplicationRepository;
 import bg.softuni.tutorme.repositories.UserRepository;
 import bg.softuni.tutorme.service.TutorApplicationService;
+import bg.softuni.tutorme.service.exceptions.ApplicationNotFoundException;
 import bg.softuni.tutorme.service.exceptions.UserNotFoundException;
 import org.hibernate.ObjectNotFoundException;
 import org.springframework.stereotype.Service;
@@ -57,11 +58,11 @@ public class TutorApplicationServiceImpl implements TutorApplicationService {
     }
 
     @Override
-    public boolean approveApplication(long applicationId) throws UserNotFoundException {
+    public boolean approveApplication(long applicationId) throws UserNotFoundException, ApplicationNotFoundException {
         Optional<TutorApplication> appById = this.tutorApplicationRepository.findById(applicationId);
 
         if (!appById.isPresent()){
-            return false; //todo replace with exception
+            throw new ApplicationNotFoundException();
         }
 
         TutorApplication tutorApplication = appById.get();

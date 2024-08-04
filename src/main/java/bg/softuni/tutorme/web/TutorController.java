@@ -4,6 +4,7 @@ import bg.softuni.tutorme.entities.dtos.tutor.TutorApplicationDTO;
 import bg.softuni.tutorme.entities.dtos.subjects.SubjectFeatureDTO;
 import bg.softuni.tutorme.service.SubjectService;
 import bg.softuni.tutorme.service.TutorApplicationService;
+import bg.softuni.tutorme.service.exceptions.ApplicationNotFoundException;
 import bg.softuni.tutorme.service.exceptions.UserNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
@@ -91,9 +92,8 @@ public class TutorController {
     }
 
     //ADMIN Rights
-    //Todo make sure that only admin can do this in sec config
     @PostMapping("/admin/approve-tutor-application/{id}")
-    public String approveTutorApplication(@PathVariable("id") long applicationId) throws UserNotFoundException {
+    public String approveTutorApplication(@PathVariable("id") long applicationId) throws UserNotFoundException, ApplicationNotFoundException {
         //todo make sure an application cannot be approved when rejected
 
         this.tutorApplicationService.approveApplication(applicationId);

@@ -10,6 +10,7 @@ import bg.softuni.tutorme.repositories.AppointmentRepository;
 import bg.softuni.tutorme.repositories.CourseRepository;
 import bg.softuni.tutorme.repositories.UserRepository;
 import bg.softuni.tutorme.service.AppointmentService;
+import bg.softuni.tutorme.service.exceptions.AppointmentNotFoundException;
 import bg.softuni.tutorme.service.exceptions.CourseNotFoundException;
 import bg.softuni.tutorme.service.exceptions.UserNotFoundException;
 import org.modelmapper.ModelMapper;
@@ -51,7 +52,7 @@ public class AppointmentServiceImpl implements AppointmentService {
                 .orElseThrow(UserNotFoundException::new);
 
         Course course = this.courseRepository.findById(courseId)
-                .orElseThrow(CourseNotFoundException::new);
+                .orElseThrow(() -> new CourseNotFoundException(courseId));
 
         UserEntity courseOwner = course.getCourseOwner();
 
@@ -77,10 +78,10 @@ public class AppointmentServiceImpl implements AppointmentService {
 
     @Override
     @Transactional
-    public AppointmentDetailDTO getAppointmentById(long id) {
+    public AppointmentDetailDTO getAppointmentById(long id) throws AppointmentNotFoundException {
 
         Appointment appointment = this.appointmentRepository.findById(id)
-                .orElseThrow(IllegalArgumentException::new);//todo change exception
+                .orElseThrow(() -> new AppointmentNotFoundException(id));
 
         return this.modelMapper.map(appointment, AppointmentDetailDTO.class)
                 .setMadeBy(mapUserDTO(appointment.getUser()))

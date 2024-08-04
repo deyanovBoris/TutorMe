@@ -3,6 +3,7 @@ package bg.softuni.tutorme.web;
 import bg.softuni.tutorme.entities.dtos.appointment.AppointmentDetailDTO;
 import bg.softuni.tutorme.entities.dtos.DateTimeDTO;
 import bg.softuni.tutorme.service.AppointmentService;
+import bg.softuni.tutorme.service.exceptions.AppointmentNotFoundException;
 import bg.softuni.tutorme.service.exceptions.CourseNotFoundException;
 import bg.softuni.tutorme.service.exceptions.UserNotAllowedException;
 import bg.softuni.tutorme.service.exceptions.UserNotFoundException;
@@ -28,7 +29,7 @@ public class AppointmentController {
     @GetMapping("/appointment/{id}")
     public String getAppointment(@PathVariable("id") long id,
                                  Model model,
-                                 Principal principal){
+                                 Principal principal) throws AppointmentNotFoundException {
 
         AppointmentDetailDTO appointmentById = this.appointmentService.getAppointmentById(id);
         String username = principal.getName();
@@ -65,7 +66,7 @@ public class AppointmentController {
 
     @DeleteMapping("/appointment/delete/{id}")
     public String deleteAppointment(@PathVariable("id") long id,
-                                    Principal principal){
+                                    Principal principal) throws AppointmentNotFoundException {
 
         AppointmentDetailDTO appointmentById = this.appointmentService.getAppointmentById(id);
         String username = principal.getName();

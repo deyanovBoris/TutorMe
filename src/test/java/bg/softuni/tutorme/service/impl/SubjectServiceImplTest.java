@@ -4,7 +4,6 @@ package bg.softuni.tutorme.service.impl;
 import bg.softuni.tutorme.entities.Subject;
 import bg.softuni.tutorme.entities.dtos.subjects.SubjectFeatureDTO;
 import bg.softuni.tutorme.repositories.SubjectRepository;
-import bg.softuni.tutorme.service.SubjectService;
 import org.hibernate.ObjectNotFoundException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,8 +14,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
 
 import java.util.*;
-import java.util.concurrent.ThreadLocalRandom;
-import java.util.stream.Collectors;
 
 import static org.mockito.Mockito.when;
 

@@ -60,6 +60,17 @@ public class UserEntityServiceImpl implements UserEntityService {
         return true;
     }
 
+    private UserEntity mapToUser(UserRegisterDTO userRegisterDTO) {
+        return new UserEntity()
+                .setUsername(userRegisterDTO.getUsername())
+                .setName(userRegisterDTO.getFullName())
+                .setRoles(List.of(this.roleRepository.findByRole(UserRoleEnum.USER).get()))
+                .setEmail(userRegisterDTO.getEmail())
+                .setPassword(passwordEncoder
+                        .encode(userRegisterDTO.getPassword()))
+                .setFeatured(false);
+    }
+
     @Override
     public String getUserIdByUsername(String username) throws UserNotFoundException {
         return this.userRepository.findByUsername(username)
@@ -72,7 +83,7 @@ public class UserEntityServiceImpl implements UserEntityService {
     public boolean isEnrolledInCourse(String username, long courseId) throws UserNotFoundException {
         return this.userRepository.findByUsername(username)
                 .orElseThrow(UserNotFoundException::new)
-                 .getCoursesAttending()
+                .getCoursesAttending()
                 .stream()
                 .anyMatch(course -> course.getId() == courseId);
     }
@@ -126,14 +137,5 @@ public class UserEntityServiceImpl implements UserEntityService {
                 .collect(Collectors.toList());
     }
 
-    private UserEntity mapToUser(UserRegisterDTO userRegisterDTO) {
-        return new UserEntity()
-                .setUsername(userRegisterDTO.getUsername())
-                .setName(userRegisterDTO.getFullName())
-                .setRoles(List.of(this.roleRepository.findByRole(UserRoleEnum.USER).get()))
-                .setEmail(userRegisterDTO.getEmail())
-                .setPassword(passwordEncoder
-                        .encode(userRegisterDTO.getPassword()))
-                .setFeatured(false);
-    }
+
 }
