@@ -1,10 +1,13 @@
 package bg.softuni.tutorme.web;
 
 import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.List;
 
 import bg.softuni.tutorme.entities.UserEntity;
+import bg.softuni.tutorme.entities.dtos.ProfilePhotoDTO;
 import bg.softuni.tutorme.entities.dtos.quotes.QuoteOutputDTO;
 import bg.softuni.tutorme.entities.dtos.subjects.SubjectFeatureDTO;
 import bg.softuni.tutorme.entities.dtos.tutor.TutorFeatureDTO;
@@ -13,8 +16,11 @@ import bg.softuni.tutorme.service.QuoteService;
 import bg.softuni.tutorme.service.SubjectService;
 import bg.softuni.tutorme.service.UserEntityService;
 import bg.softuni.tutorme.service.exceptions.UserNotFoundException;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -29,6 +35,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
@@ -46,6 +53,8 @@ public class HomeControllerTest {
     private QuoteService mockQuoteService;
     @MockBean
     private UserEntityService mockUserEntityService;
+    @Captor
+    ArgumentCaptor<ProfilePhotoDTO> profilePhotoCaptor;
     private HomeController toTest;
 
     @BeforeEach
@@ -64,7 +73,7 @@ public class HomeControllerTest {
 
         // Act and Assert
         mockMvc.perform(MockMvcRequestBuilders.get("/"))
-                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.view().name("index"))
                 .andExpect(MockMvcResultMatchers.model().attributeExists("homePageStyles"))
                 .andExpect(MockMvcResultMatchers.model().attribute("homePageStyles", true))
@@ -91,7 +100,7 @@ public class HomeControllerTest {
                 .thenReturn(userProfileDTO);
 
         mockMvc.perform(MockMvcRequestBuilders.get("/user/{username}", "username"))
-                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.view().name("profile"))
                 .andExpect(MockMvcResultMatchers.model().attributeExists("userData"))
                 .andExpect(MockMvcResultMatchers.model().attribute("userData", userProfileDTO))
@@ -104,10 +113,39 @@ public class HomeControllerTest {
     @WithMockUser(username = "notUsername")
     public void testDashboard_UserNotAllowed() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/user/{username}", "username"))
-                .andExpect(MockMvcResultMatchers.status().isForbidden())
+                .andExpect(status().isForbidden())
                 .andDo(MockMvcResultHandlers.print());
     }
 
+    @Test
+    @WithMockUser(username = "testUser")
+    public void testAddProfilePhoto_Success() throws Exception {
+        ProfilePhotoDTO profilePhotoDTO = new ProfilePhotoDTO()
+                .setProfilePhotoUrl("https://example.com");
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/profile/add-profile-photo")
+                        .flashAttr("profilePhotoDTO", profilePhotoDTO)
+                        .with(SecurityMockMvcRequestPostProcessors.csrf())
+                        .param("profilePhotoUrl", "https://example.com"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/user/testUser"));
+
+        verify(mockUserEntityService).changeProfilePhoto(any(ProfilePhotoDTO.class), eq("testUser"));
+    }
+
+    @Test
+    @WithMockUser(username = "testUser")
+    public void testAddProfilePhoto_BindingErrors() throws Exception {
+        ProfilePhotoDTO profilePhotoDTO = new ProfilePhotoDTO()
+                .setProfilePhotoUrl("notUrl");
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/profile/add-profile-photo")
+                        .flashAttr("profilePhotoDTO", profilePhotoDTO)
+                        .with(SecurityMockMvcRequestPostProcessors.csrf())
+                        .param("profilePhotoUrl", "notUrl"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/user/testUser"));
+    }
 
 }
 

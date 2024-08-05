@@ -1,5 +1,6 @@
 package bg.softuni.tutorme.web;
 
+import bg.softuni.tutorme.entities.dtos.ProfilePhotoDTO;
 import bg.softuni.tutorme.entities.dtos.quotes.QuoteOutputDTO;
 import bg.softuni.tutorme.entities.dtos.tutor.TutorFeatureDTO;
 import bg.softuni.tutorme.entities.dtos.subjects.SubjectFeatureDTO;
@@ -9,11 +10,16 @@ import bg.softuni.tutorme.service.SubjectService;
 import bg.softuni.tutorme.service.UserEntityService;
 import bg.softuni.tutorme.service.exceptions.UserNotAllowedException;
 import bg.softuni.tutorme.service.exceptions.UserNotFoundException;
+import jakarta.validation.Valid;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
 import java.util.List;
@@ -30,6 +36,17 @@ public class HomeController {
         this.userEntityService = userEntityService;
         this.subjectService = subjectService;
         this.quoteService = quoteService;
+    }
+    @GetMapping("/")
+    public String index(Model model){
+        List<SubjectFeatureDTO> featuredSubjects = this.subjectService.getFeaturedSubjects();
+        List<TutorFeatureDTO> tutorFeatureDTOS = this.userEntityService.getFeaturedTutors();
+
+        model.addAttribute("homePageStyles", true);
+        model.addAttribute("featuredSubjects",  featuredSubjects);
+        model.addAttribute("featuredTutors", tutorFeatureDTOS);
+
+        return "index";
     }
 
     @GetMapping("/user/{username}")
@@ -54,16 +71,29 @@ public class HomeController {
 
         return "profile";
     }
-
-    @GetMapping("/")
-    public String index(Model model){
-        List<SubjectFeatureDTO> featuredSubjects = this.subjectService.getFeaturedSubjects();
-        List<TutorFeatureDTO> tutorFeatureDTOS = this.userEntityService.getFeaturedTutors();
-
-        model.addAttribute("homePageStyles", true);
-        model.addAttribute("featuredSubjects",  featuredSubjects);
-        model.addAttribute("featuredTutors", tutorFeatureDTOS);
-
-        return "index";
+    @ModelAttribute("profilePhotoObject")
+    public ProfilePhotoDTO profilePhotoDTO(){
+        return new ProfilePhotoDTO();
     }
+    @PostMapping("/profile/add-profile-photo")
+    public String addProfilePhoto(@Valid ProfilePhotoDTO data,
+                                  BindingResult bindingResult,
+                                  RedirectAttributes rAtt,
+                                  Principal principal) throws UserNotFoundException {
+        String username = principal.getName();
+
+        if (bindingResult.hasErrors()){
+            rAtt.addFlashAttribute("profilePhotoObject", data);
+            rAtt.addFlashAttribute(
+                    "org.springframework.validation.BindingResult.profilePhotoObject",
+                    bindingResult);
+
+            return "redirect:/user/" + username;
+        }
+        this.userEntityService.changeProfilePhoto(data, username);
+
+        return "redirect:/user/" + username;
+    }
+
+
 }

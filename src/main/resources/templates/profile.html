@@ -23,6 +23,28 @@
                     <h4>Welcome!</h4>
                     <p th:text="${userData.username}">Username</p>
                     <img th:src="${userData.profilePhotoUrl}" alt="Profile Photo" class="profile-photo">
+                    <div th:object="${profilePhotoObject}">
+                        <button id="changeProfilePictureButton" class="btn btn-primary mt-3"
+                                th:text="${userData.profilePhotoUrl == null} ? 'Add Profile Picture' : 'Change Profile Picture'">
+                        </button>
+                        <p th:if="${#fields.hasErrors('profilePhotoUrl')}"
+                               th:errors="*{profilePhotoUrl}"
+                               class="danger text-danger" style="font-size: 15px">Profile photo error message</p>
+                        <div id="profilePictureForm" class="mt-3 hidden">
+                            <form th:action="@{/profile/add-profile-photo}"
+                                  th:method="POST">
+                                <div class="input-group">
+                                    <input th:field="*{profilePhotoUrl}" type="url" name="profilePictureUrl" class="form-control" placeholder="Enter image URL" required>
+                                    <div class="input-group-append">
+                                        <button class="btn btn-success" type="submit">Submit</button>
+                                    </div>
+                                </div>
+                            </form>
+
+                        </div>
+
+                    </div>
+
                     <h5 class="mt-3">Bio:</h5>
                     <p th:text="${userData.biography}">Bio</p>
                     <span>Random quote:</span>
@@ -33,6 +55,9 @@
             <div class="card p-4 mt-4 mb-4" style="height: 397px">
                 <h5>Appointments made by you</h5>
                 <div class="scroll-vertical">
+                    <div th:if="${userData.getAppointments().size() == 0}">
+                        <p class="ms-2">No appointments to display</p>
+                    </div>
                     <a th:each="app : ${userData.appointments}" th:href="@{/appointment/{id}(id=${app.id})}" style="text-decoration: none">
                         <div class="card p-2 mb-2">
                             <div class="appointment-info">
@@ -101,5 +126,12 @@
 <script src="/js/jquery-3.7.1.min.js"></script>
 <script src="/js/popper.min.js"></script>
 <script src="/js/bootstrap.bundle.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#changeProfilePictureButton').on('click', function() {
+            $('#profilePictureForm').toggleClass('hidden');
+        });
+    });
+</script>
 </body>
 </html>

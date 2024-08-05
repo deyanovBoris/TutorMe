@@ -1,5 +1,6 @@
 package bg.softuni.tutorme.service;
 
+import bg.softuni.tutorme.entities.dtos.ProfilePhotoDTO;
 import bg.softuni.tutorme.entities.dtos.tutor.TutorFeatureDTO;
 import bg.softuni.tutorme.entities.dtos.user.UserProfileDTO;
 import bg.softuni.tutorme.entities.dtos.user.UserRegisterDTO;
@@ -21,4 +22,6 @@ public interface UserEntityService {
     List<TutorFeatureDTO> getFeaturedTutors();
 
     UserProfileDTO getUserByUsername(String username) throws UserNotFoundException;
+
+    void changeProfilePhoto(ProfilePhotoDTO data, String username) throws UserNotFoundException;
 }

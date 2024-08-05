@@ -3,6 +3,7 @@ package bg.softuni.tutorme.service.impl;
 import bg.softuni.tutorme.entities.Appointment;
 import bg.softuni.tutorme.entities.Course;
 import bg.softuni.tutorme.entities.UserEntity;
+import bg.softuni.tutorme.entities.dtos.ProfilePhotoDTO;
 import bg.softuni.tutorme.entities.dtos.appointment.AppointmentDTO;
 import bg.softuni.tutorme.entities.dtos.tutor.TutorFeatureDTO;
 import bg.softuni.tutorme.entities.dtos.user.UserProfileDTO;
@@ -124,6 +125,17 @@ public class UserEntityServiceImpl implements UserEntityService {
                 .setCoursesTutoring(mapCourses(user.getCoursesTutoring()))
                 .setAppointments(mapAppointments(user.getAppointments()));
     }
+
+    @Override
+    public void changeProfilePhoto(ProfilePhotoDTO data, String username) throws UserNotFoundException {
+        UserEntity user = this.userRepository.findByUsername(username)
+                .orElseThrow(UserNotFoundException::new);
+
+        user.setProfilePhotoUrl(data.getProfilePhotoUrl());
+
+        this.userRepository.save(user);
+    }
+
     private List<CourseShortInfoDTO> mapCourses(List<Course> courses){
         return courses
                 .stream()
