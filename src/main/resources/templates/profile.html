@@ -22,7 +22,14 @@
                 <div class="text-center">
                     <h4>Welcome!</h4>
                     <p th:text="${userData.username}">Username</p>
-                    <img th:src="${userData.profilePhotoUrl}" alt="Profile Photo" class="profile-photo">
+                    <th:block th:if="${userData.profilePhotoUrl == null}">
+                        <img src="/images/placeholder-user.jpg" alt="Profile Photo" class="profile-photo">
+                    </th:block>
+
+                    <th:block th:unless="${userData.profilePhotoUrl == null}">
+                        <img th:src="${userData.profilePhotoUrl}" alt="Profile Photo" class="profile-photo">
+                    </th:block>
+
                     <div th:object="${profilePhotoObject}">
                         <button id="changeProfilePictureButton" class="btn btn-primary mt-3"
                                 th:text="${userData.profilePhotoUrl == null} ? 'Add Profile Picture' : 'Change Profile Picture'">

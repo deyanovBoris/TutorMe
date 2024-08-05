@@ -12,6 +12,19 @@
     border-radius: 50%;
     object-fit: cover;
 }
+
+.placeholder-image {
+    width: 140px;
+    height: 140px;
+    background-color: #e0e0e0;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: #9e9e9e;
+}
+
 .scroll-horizontal {
     white-space: nowrap;
     overflow-x: auto;
