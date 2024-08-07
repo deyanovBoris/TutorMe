@@ -18,6 +18,8 @@ public class Appointment {
     private UserEntity user;
     @ManyToOne(optional = false)
     private Course course;
+    @Column(name = "meeting_link")
+    private String meetingLink;
 
     public Appointment() {
     }
@@ -64,6 +66,15 @@ public class Appointment {
 
     public Appointment setCourse(Course course) {
         this.course = course;
+        return this;
+    }
+
+    public String getMeetingLink() {
+        return meetingLink;
+    }
+
+    public Appointment setMeetingLink(String meetingLink) {
+        this.meetingLink = meetingLink;
         return this;
     }
 }

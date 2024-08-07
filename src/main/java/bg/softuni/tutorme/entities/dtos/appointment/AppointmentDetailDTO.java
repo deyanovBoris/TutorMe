@@ -15,6 +15,7 @@ public class AppointmentDetailDTO {
     private String courseTitle;
 
     private LocalDateTime date;
+    private String meetingLink;
 
     public AppointmentDetailDTO() {
     }
@@ -61,6 +62,15 @@ public class AppointmentDetailDTO {
 
     public AppointmentDetailDTO setDate(LocalDateTime date) {
         this.date = date;
+        return this;
+    }
+
+    public String getMeetingLink() {
+        return meetingLink;
+    }
+
+    public AppointmentDetailDTO setMeetingLink(String meetingLink) {
+        this.meetingLink = meetingLink;
         return this;
     }
 }

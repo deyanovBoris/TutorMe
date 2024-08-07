@@ -1,5 +1,6 @@
 package bg.softuni.tutorme.web;
 
+import bg.softuni.tutorme.entities.dtos.MeetingLinkDTO;
 import bg.softuni.tutorme.entities.dtos.appointment.AppointmentDetailDTO;
 import bg.softuni.tutorme.entities.dtos.DateTimeDTO;
 import bg.softuni.tutorme.service.AppointmentService;
@@ -7,12 +8,11 @@ import bg.softuni.tutorme.service.exceptions.AppointmentNotFoundException;
 import bg.softuni.tutorme.service.exceptions.CourseNotFoundException;
 import bg.softuni.tutorme.service.exceptions.UserNotAllowedException;
 import bg.softuni.tutorme.service.exceptions.UserNotFoundException;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
@@ -40,6 +40,7 @@ public class AppointmentController {
 
         model.addAttribute("appointmentPageStyling", true);
         model.addAttribute("appointmentData", appointmentById);
+        model.addAttribute("curUsername", principal.getName());
 
         return "appointment";
     }
@@ -78,5 +79,37 @@ public class AppointmentController {
         this.appointmentService.deleteAppointment(id);
 
         return "redirect:/";
+    }
+
+    @ModelAttribute("meetingLinkObject")
+    public MeetingLinkDTO meetingLinkDTO(){
+        return new MeetingLinkDTO();
+    }
+    @PostMapping("/appointment/change-meeting-link/{id}")
+    public String changeMeetingLink(@PathVariable("id") long id,
+                                    @Valid MeetingLinkDTO data,
+                                    BindingResult bindingResult,
+                                    RedirectAttributes rAtt,
+                                    Principal principal) throws AppointmentNotFoundException {
+        String courseOwner = this.appointmentService
+                .getAppointmentById(id)
+                .getCourseOwner()
+                .getUsername();
+        if (!courseOwner.equals(principal.getName())){
+            throw new UserNotAllowedException();
+        }
+
+        if (bindingResult.hasErrors()){
+            rAtt.addFlashAttribute("meetingLinkObject", data);
+            rAtt.addFlashAttribute(
+                    "org.springframework.validation.BindingResult.meetingLinkObject",
+                    bindingResult);
+
+            return "redirect:/appointment/{id}";
+        }
+
+        this.appointmentService.updateMeetingLink(data, id);
+
+        return "redirect:/appointment/{id}";
     }
 }

@@ -41,10 +41,10 @@
               th:method="POST"
               th:object="${userRegisterObject}">
             <div class="form-group">
-                <label th:for="username">Username</label>
+                <label th:for="username" th:text="#{register_username}">Username</label>
                 <input th:field="*{username}"
                        type="text"
-                       placeholder="Username"
+                       th:placeholder="#{register_username}"
                        class="form-control"
                        min = 4, max = 20
                        required>
@@ -53,10 +53,10 @@
                        class="danger" style="font-size: 15px">Username error message</small>
             </div>
             <div class="form-group">
-                <label th:for="fullName">Full Name</label>
+                <label th:for="fullName" th:text="#{register_full_name}">Full Name</label>
                 <input th:field="*{fullName}"
                        type="text"
-                       placeholder="Full Name"
+                       th:placeholder="#{register_full_name}"
                        class="form-control"
                        min = 2, max = 50
                        required>
@@ -66,10 +66,10 @@
 
             </div>
             <div class="form-group">
-                <label th:for="email">Email</label>
+                <label th:for="email" th:text="#{register_email}">Email</label>
                 <input th:field="*{email}"
                        type="email"
-                       placeholder="Email"
+                       th:placeholder="#{register_email}"
                        class="form-control"
                        required>
                 <small th:if="${#fields.hasErrors('email')}"
@@ -78,10 +78,10 @@
 
             </div>
             <div class="form-group">
-                <label th:for="password">Password</label>
+                <label th:for="password" th:text="#{register_password}">Password</label>
                 <input th:field="*{password}"
                        type="password"
-                       placeholder="Password"
+                       th:placeholder="#{register_password}"
                        class="form-control"
                        min = 8
                        required>
@@ -91,21 +91,27 @@
 
             </div>
             <div class="form-group">
-                <label th:for="confirmPassword">Confirm Password</label>
+                <label th:for="confirmPassword" th:text="#{register_confirm_password}">Confirm Password</label>
                 <input th:field="*{confirmPassword}"
                        type="password"
-                       placeholder="Confirm Password"
+                       th:placeholder="#{register_confirm_password}"
                        class="form-control"
                        min = 8
                        required>
                 <small th:if="${#fields.hasErrors('confirmPassword')}"
                        th:errors="*{confirmPassword}"
-                       class="danger" style="font-size: 15px">Password error message</small>
+                       class="danger"
+                       style="font-size: 15px">Password error message</small>
                 <small th:if="${passwordsDoNotMatch}"
-                       class="danger" style="font-size: 15px">Passwords do not match!</small>
+                       class="danger"
+                       style="font-size: 15px">Passwords do not match!</small>
 
             </div>
-            <button type="submit" class="btn btn-primary register-btn">Register</button>
+            <button type="submit"
+                    class="btn btn-primary register-btn"
+                    th:text="#{register_title}">
+                Register
+            </button>
         </form>
     </div>
 </div>

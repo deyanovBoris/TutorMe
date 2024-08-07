@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec='http://www.thymeleaf.org/extras/spring-security'>
 <head th:include="fragments/head:: headerFragment (pageTitle = 'Appointment')">
 </head>
 
@@ -38,7 +39,46 @@
         <h5>Appointment</h5>
         <h5 th:text="${appointmentData.courseTitle}" class="card-title">Introduction to Programming</h5>
         <p>At: <span th:text="${#temporals.format(appointmentData.date, 'dd-MM-yyyy HH:mm')}">Date: 2024-08-01</span></p>
-        <p><a href="https://example.com/meeting" class="card-link">Join Meeting</a></p>
+
+        <button id="editMeetingButton"
+                th:if="${curUsername == appointmentData.courseOwner.getUsername()}"
+                class="btn btn-sm btn-outline-primary mb-2">
+          Edit meeting link
+        </button>
+
+        <p th:if="${#fields.hasErrors('meetingLinkObject.meetingUrl')}"
+           th:errors="*{meetingLinkObject.meetingUrl}"
+           class="danger text-danger" style="font-size: 15px">Meeting link error message
+        </p>
+
+        <div id="meetingLinkForm" class="mt-1 mb-1 ps-5 pe-5 hidden">
+          <form th:action="@{/appointment/change-meeting-link/{id}(id = ${appointmentData.id})}"
+                th:method="POST"
+                th:object="${meetingLinkObject}">
+            <div class="input-group">
+              <input th:field="*{meetingUrl}" type="url" name="meetingLinkUrl" class="form-control" placeholder="Enter meeting link" required>
+              <div class="input-group-append">
+                <button class="btn btn-success" type="submit">Submit</button>
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <th:block th:if="${appointmentData.meetingLink == null}">
+          <p class="text-danger">
+            Meeting link not yet available
+          </p>
+        </th:block>
+
+        <th:block th:unless="${appointmentData.meetingLink == null}">
+          <p>
+            <a th:href="${appointmentData.getMeetingLink()}" class="card-link">
+              Join Meeting
+            </a>
+          </p>
+        </th:block>
+
+
       </div>
       <div class="btn-group justify-content-center" role="group">
 <!--        <form action="/approve" method="post">-->
@@ -61,6 +101,16 @@
 
 <div th:replace="~{fragments/footer}">Footer</div>
 
+<script src="/js/jquery-3.7.1.min.js"></script>
 <script src="/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        $('#editMeetingButton').on('click', function() {
+            $('#meetingLinkForm').toggleClass('hidden');
+        });
+    });
+</script>
+
 </body>
 </html>

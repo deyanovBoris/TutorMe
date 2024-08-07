@@ -48,3 +48,5 @@
     display: inline;
     align-items: center/* Make forms inline to keep the buttons in a single line */
 }
+
+.hidden { display: none; }

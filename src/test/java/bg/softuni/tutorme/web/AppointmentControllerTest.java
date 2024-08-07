@@ -1,11 +1,15 @@
 package bg.softuni.tutorme.web;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+import bg.softuni.tutorme.entities.Appointment;
+import bg.softuni.tutorme.entities.Course;
 import bg.softuni.tutorme.entities.dtos.DateTimeDTO;
+import bg.softuni.tutorme.entities.dtos.MeetingLinkDTO;
 import bg.softuni.tutorme.entities.dtos.appointment.AppointmentDetailDTO;
 import bg.softuni.tutorme.entities.dtos.user.UserShortDTO;
 import bg.softuni.tutorme.service.AppointmentService;
@@ -14,6 +18,8 @@ import bg.softuni.tutorme.service.exceptions.CourseNotFoundException;
 import bg.softuni.tutorme.service.exceptions.UserNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -194,6 +200,102 @@ public class AppointmentControllerTest {
                         .with(SecurityMockMvcRequestPostProcessors.csrf())
                         .param("dateTime", dateTimeDTO.getDateTime()))
                 .andExpect(status().isNotFound());
+    }
+
+    @Test
+    @WithMockUser(username = "current_user")
+    public void testChangeMeetingLinkSuccessfulUpdate() throws Exception {
+        long appointmentId = 1L;
+        MeetingLinkDTO data = new MeetingLinkDTO();
+        data.setMeetingUrl("https://newmeetinglink.com");
+
+        AppointmentDetailDTO appointmentDetailDTO = mock(AppointmentDetailDTO.class);
+        UserShortDTO courseOwner = mock(UserShortDTO.class);
+
+        when(mockAppointmentService.getAppointmentById(appointmentId)).thenReturn(appointmentDetailDTO);
+        when(appointmentDetailDTO.getCourseOwner()).thenReturn(courseOwner);
+        when(courseOwner.getUsername()).thenReturn("current_user");
+
+        mockMvc.perform(post("/appointment/change-meeting-link/{id}", appointmentId)
+                        .param("meetingUrl", data.getMeetingUrl())
+                        .flashAttr("meetingLinkObject", data)
+                        .principal(() -> "current_user")
+                        .with(SecurityMockMvcRequestPostProcessors.csrf()))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/appointment/" + appointmentId));
+
+        ArgumentCaptor<MeetingLinkDTO> captor = ArgumentCaptor.forClass(MeetingLinkDTO.class);
+        verify(mockAppointmentService).updateMeetingLink(captor.capture(), eq(appointmentId));
+
+        MeetingLinkDTO captured = captor.getValue();
+        assertEquals(data.getMeetingUrl(), captured.getMeetingUrl());
+    }
+
+    @Test
+    @WithMockUser(username = "current_user")
+    public void testChangeMeetingLinkValidationErrors() throws Exception {
+        long appointmentId = 1L;
+        MeetingLinkDTO data = new MeetingLinkDTO(); //Empty
+
+        AppointmentDetailDTO appointmentDetailDTO = mock(AppointmentDetailDTO.class);
+        UserShortDTO courseOwner = mock(UserShortDTO.class);
+
+        when(mockAppointmentService.getAppointmentById(appointmentId)).thenReturn(appointmentDetailDTO);
+        when(appointmentDetailDTO.getCourseOwner()).thenReturn(courseOwner);
+        when(courseOwner.getUsername()).thenReturn("current_user");
+
+        mockMvc.perform(post("/appointment/change-meeting-link/{id}", appointmentId)
+                        .flashAttr("meetingLinkObject", data)
+                        .principal(() -> "current_user")
+                        .with(SecurityMockMvcRequestPostProcessors.csrf()))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/appointment/" + appointmentId))
+                .andExpect(flash().attributeExists("meetingLinkObject"))
+                .andExpect(flash().attributeExists("org.springframework.validation.BindingResult.meetingLinkObject"));
+
+        verify(mockAppointmentService, never()).updateMeetingLink(any(MeetingLinkDTO.class), anyLong());
+    }
+
+    @Test
+    @WithMockUser(username = "current_user")
+    public void testChangeMeetingLinkUserNotAllowed() throws Exception {
+        long appointmentId = 1L;
+        MeetingLinkDTO data = new MeetingLinkDTO();
+        data.setMeetingUrl("https://newmeetinglink.com");
+
+        AppointmentDetailDTO appointmentDetailDTO = mock(AppointmentDetailDTO.class);
+        UserShortDTO courseOwner = mock(UserShortDTO.class);
+
+        when(mockAppointmentService.getAppointmentById(appointmentId)).thenReturn(appointmentDetailDTO);
+        when(appointmentDetailDTO.getCourseOwner()).thenReturn(courseOwner);
+        when(courseOwner.getUsername()).thenReturn("other_user");
+
+        mockMvc.perform(post("/appointment/change-meeting-link/{id}", appointmentId)
+                        .flashAttr("meetingLinkObject", data)
+                        .principal(() -> "current_user")
+                        .with(SecurityMockMvcRequestPostProcessors.csrf()))
+                .andExpect(status().isForbidden());
+
+        verify(mockAppointmentService, never()).updateMeetingLink(any(MeetingLinkDTO.class), anyLong());
+    }
+
+    @Test
+    @WithMockUser(username = "current_user")
+    public void testChangeMeetingLinkAppointmentNotFoundException() throws Exception {
+        long appointmentId = 1L;
+        MeetingLinkDTO data = new MeetingLinkDTO();
+        data.setMeetingUrl("https://newmeetinglink.com");
+
+        when(mockAppointmentService.getAppointmentById(appointmentId))
+                .thenThrow(new AppointmentNotFoundException(appointmentId));
+
+        mockMvc.perform(post("/appointment/change-meeting-link/{id}", appointmentId)
+                        .flashAttr("meetingLinkObject", data)
+                        .principal(() -> "current_user")
+                        .with(SecurityMockMvcRequestPostProcessors.csrf()))
+                .andExpect(status().isNotFound());
+
+        verify(mockAppointmentService, never()).updateMeetingLink(any(MeetingLinkDTO.class), anyLong());
     }
 }
 

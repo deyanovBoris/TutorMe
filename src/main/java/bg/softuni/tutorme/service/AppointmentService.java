@@ -1,5 +1,6 @@
 package bg.softuni.tutorme.service;
 
+import bg.softuni.tutorme.entities.dtos.MeetingLinkDTO;
 import bg.softuni.tutorme.entities.dtos.appointment.AppointmentDetailDTO;
 import bg.softuni.tutorme.entities.dtos.DateTimeDTO;
 import bg.softuni.tutorme.service.exceptions.AppointmentNotFoundException;
@@ -14,4 +15,6 @@ public interface AppointmentService {
     AppointmentDetailDTO getAppointmentById(long id) throws AppointmentNotFoundException;
 
     void deleteAppointment(long id);
+
+    void updateMeetingLink(MeetingLinkDTO data, long id) throws AppointmentNotFoundException;
 }

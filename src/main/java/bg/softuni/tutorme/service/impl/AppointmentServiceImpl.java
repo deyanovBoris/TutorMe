@@ -3,6 +3,7 @@ package bg.softuni.tutorme.service.impl;
 import bg.softuni.tutorme.entities.Appointment;
 import bg.softuni.tutorme.entities.Course;
 import bg.softuni.tutorme.entities.UserEntity;
+import bg.softuni.tutorme.entities.dtos.MeetingLinkDTO;
 import bg.softuni.tutorme.entities.dtos.appointment.AppointmentDetailDTO;
 import bg.softuni.tutorme.entities.dtos.DateTimeDTO;
 import bg.softuni.tutorme.entities.dtos.user.UserShortDTO;
@@ -91,6 +92,16 @@ public class AppointmentServiceImpl implements AppointmentService {
     @Override
     public void deleteAppointment(long id) {
         this.appointmentRepository.deleteById(id);
+    }
+
+    @Override
+    public void updateMeetingLink(MeetingLinkDTO data, long id) throws AppointmentNotFoundException {
+        Appointment appointment = this.appointmentRepository.findById(id)
+                .orElseThrow(() -> new AppointmentNotFoundException(id));
+
+        appointment.setMeetingLink(data.getMeetingUrl());
+
+        this.appointmentRepository.save(appointment);
     }
 
     private UserShortDTO mapUserDTO(UserEntity user) {

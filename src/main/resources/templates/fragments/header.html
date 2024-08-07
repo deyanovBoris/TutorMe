@@ -50,7 +50,9 @@
                         >Profile</a>
             </li>
             <li sec:authorize="hasRole('ADMIN')">
-                <a th:href="@{/admin/tutor-applications}" class="nav-link px-2" th:text="#{nav_bar_admin}">Admin</a>
+                <a th:href="@{/admin/tutor-applications}"
+                   class="nav-link px-2"
+                   th:text="#{nav_bar_admin}">Admin</a>
             </li>
         </ul>
 
