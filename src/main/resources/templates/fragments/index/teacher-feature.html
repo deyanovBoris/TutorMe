@@ -8,7 +8,7 @@
             <img th:src="${tutor.getProfilePhotoUrl()}" class="mb-3" alt="User Photo" style="width: 170px; height: 170px; border-radius: 50%; object-fit: cover">
             <h2 th:text="${tutor.getName()}" class="fw-normal">Heading</h2>
             <p th:text="${tutor.getBiography()}">Tutor Bio</p>
-            <p><a class="btn btn-outline-primary" href="#">View details &raquo;</a></p>
+            <p><a class="btn btn-outline-primary" href="#" th:text="#{index_teacher_feature_buttons}">View details &raquo;</a></p>
         </div><!-- /.col-lg-4 -->
     </div><!-- /.row -->
 
